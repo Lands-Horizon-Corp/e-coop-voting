@@ -1,0 +1,377 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// IMPORTANT NOTE
+// if POSSIBLE apply these following property to the models
+// createdBy Int?
+// updatedBy Int?
+// deletedBy Int?
+// createdAt DateTime  @default(now())
+// updatedAt DateTime  @updatedAt
+// deletedAt DateTime?
+// deleted Boolean @default(false)
+
+enum Role {
+    root
+    coop_root
+    admin
+    staff
+}
+
+model User {
+    id Int @id @default(autoincrement())
+
+    picture  String? @default("/images/default-avatar.png")
+    name     String
+    email    String  @unique
+    password String
+
+    dateVerified DateTime?
+    verified     Boolean?  @default(false)
+
+    branchId Int
+    branch   Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+    coopId Int
+    coop   Coop @relation(fields: [coopId], references: [id], onDelete: Cascade)
+
+    role Role @default(staff)
+
+    assignedIncentive  IncentiveAssigned[]
+    assistedAttendance EventAttendees[]
+
+    assistedClaims IncentiveClaims[] @relation("AssistedClaims")
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deletedAt DateTime?
+
+    createdBy Int?
+    updatedBy Int?
+    deletedBy Int?
+
+    deleted Boolean @default(false)
+}
+
+model Coop {
+    id Int @id @default(autoincrement())
+
+    coopName        String
+    coopDescription String
+    coopLogo        String? @default("/images/default.png")
+
+    branches Branch[]
+    users    User[]
+    event    Event[]
+
+    createdBy Int?
+    updatedBy Int?
+    deletedBy Int?
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deletedAt DateTime?
+    deleted   Boolean?  @default(false)
+}
+
+model Branch {
+    id Int @id @default(autoincrement())
+
+    branchName        String
+    branchDescription String
+    branchAddress     String
+    branchPicture     String? @default("/images/default.png")
+
+    coopId Int
+    coop   Coop @relation(fields: [coopId], references: [id], onDelete: Cascade)
+
+    users     User[]
+    events    Event[]
+    elections Election[]
+
+    createdBy Int?
+    updatedBy Int?
+    deletedBy Int?
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deletedAt DateTime?
+    deleted   Boolean?  @default(false)
+}
+
+enum EventType {
+    election
+    event
+}
+
+enum MemberSearchMode {
+    ByPassbook
+    ByName
+}
+
+model Event {
+    id          Int       @id @default(autoincrement())
+    title       String
+    description String
+    date        DateTime
+    location    String
+    category    EventType
+    coverImage  String?   @default("/images/default.png")
+
+    branchId Int
+    branch   Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+    coopId Int
+    coop   Coop @relation(fields: [coopId], references: [id], onDelete: Cascade)
+
+    // Event Settings
+    isRegistrationOpen          Boolean          @default(false)
+    registrationOnEvent         Boolean          @default(true)
+    defaultMemberSearchMode     MemberSearchMode @default(ByPassbook)
+    requireBirthdayVerification Boolean          @default(false)
+
+    deleted Boolean
+
+    createdBy Int?
+    updatedBy Int?
+    deletedBy Int?
+
+    election Election?
+
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+    subUpdatedAt DateTime?
+
+    incentiveAssigned IncentiveAssigned[]
+    attendees         EventAttendees[]
+    incentives        Incentives[]
+    incentivesClaims  IncentiveClaims[]
+}
+
+enum gender {
+    Male
+    Female
+}
+
+model EventAttendees {
+    id             String    @id @default(uuid())
+    passbookNumber String
+    firstName      String
+    middleName     String?
+    lastName       String
+    gender         gender
+    birthday       DateTime?
+    contact        String?
+    picture        String?   @default("/images/default-avatar.png")
+    emailAddress   String?
+
+    canVote Boolean @default(true)
+
+    eventId Int
+    event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+    registered   Boolean   @default(false)
+    registeredAt DateTime?
+    voted        Boolean   @default(false)
+    voteOtp      String?
+    otpSent      DateTime?
+    surveyed     Boolean?  @default(false)
+
+    registrationAssistId Int?
+    registeredBy         User? @relation(fields: [registrationAssistId], references: [id], onDelete: SetNull)
+
+    votes            Votes[]
+    incentiveClaimed IncentiveClaims[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    createdBy Int?
+    updatedBy Int?
+
+    @@unique([eventId, passbookNumber])
+}
+
+enum VotingConfiguration {
+    ALLOW_SKIP
+    ATLEAST_ONE
+    REQUIRE_ALL
+}
+
+enum ElectionStatus {
+    pending
+    live
+    done
+}
+
+enum VotingEligibility {
+    REGISTERED
+    MIGS
+    MARKED_CANVOTE
+}
+
+enum VotingScreenOrientation {
+    LANDSCAPE
+    PORTRAIT
+    ANY
+}
+
+model Election {
+    id           Int            @id @default(autoincrement())
+    electionName String
+    status       ElectionStatus
+
+    allowBirthdayVerification Boolean                 @default(false)
+    voteEligibility           VotingEligibility       @default(MIGS)
+    voteConfiguration         VotingConfiguration     @default(ALLOW_SKIP)
+    voteScreenConfiguration   VotingScreenOrientation @default(LANDSCAPE)
+
+    sendEmailVoteCopy Boolean @default(false)
+
+    positions  Position[] // 1st to create
+    candidates Candidate[] // 2nd
+    votes      Votes[]
+
+    eventId Int   @unique
+    event   Event @relation(fields: [eventId], references: [id])
+
+    branchId Int
+    branch   Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+    deleted Boolean @default(false)
+
+    createdBy Int?
+    updatedBy Int?
+    deletedBy Int?
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deletedAt DateTime?
+}
+
+model Position {
+    id                Int    @id @default(autoincrement())
+    positionName      String
+    numberOfSelection Int
+
+    electionId Int
+    election   Election @relation(fields: [electionId], references: [id], onDelete: Cascade)
+
+    candidates Candidate[]
+}
+
+model Candidate {
+    id             Int     @id @default(autoincrement())
+    firstName      String
+    lastName       String
+    passbookNumber String
+    picture        String? @default("/images/default.png")
+
+    electionId Int
+    election   Election @relation(fields: [electionId], references: [id], onDelete: Cascade)
+
+    positionId Int
+    position   Position @relation(fields: [positionId], references: [id], onDelete: Cascade)
+    votes      Votes[]
+
+    @@unique([electionId, passbookNumber])
+}
+
+model Votes {
+    id Int @id @default(autoincrement())
+
+    attendeeId  String
+    electionId  Int
+    candidateId Int
+
+    attendee  EventAttendees @relation(fields: [attendeeId], references: [id])
+    candidate Candidate      @relation(fields: [candidateId], references: [id])
+    election  Election       @relation(fields: [electionId], references: [id])
+}
+
+enum ClaimRequirements {
+    REGISTERED
+    VOTED
+    REGISTERED_VOTED
+    REGISTERED_SURVEYED
+}
+
+model Incentives {
+    id Int @id @default(autoincrement())
+
+    itemName String
+    eventId  Int
+
+    event   Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
+    claimed IncentiveClaims[]
+
+    assigned IncentiveAssigned[]
+
+    claimRequirement ClaimRequirements? @default(REGISTERED)
+
+    createdBy Int?
+    updatedBy Int?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model IncentiveAssigned {
+    id Int @id @default(autoincrement())
+
+    // assigned user
+    userId Int
+    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    eventId Int
+    event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+    incentiveId Int
+    incentive   Incentives @relation(fields: [incentiveId], references: [id], onDelete: Cascade)
+
+    assignedQuantity Int
+
+    claims IncentiveClaims[]
+
+    updatedAt DateTime @updatedAt
+    createdBy Int?
+    updatedBy Int?
+
+    @@unique([userId, incentiveId])
+}
+
+model IncentiveClaims {
+    id Int @id @default(autoincrement())
+
+    incentiveId Int
+    incentive   Incentives @relation(fields: [incentiveId], references: [id], onDelete: Cascade)
+
+    eventId Int
+    event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+    eventAttendeeId String
+    eventAttendee   EventAttendees @relation(fields: [eventAttendeeId], references: [id], onDelete: Cascade)
+
+    claimedOnline Boolean @default(false) // if claimed online
+
+    assistedById Int?
+    assistedBy   User? @relation("AssistedClaims", fields: [assistedById], references: [id], onDelete: SetNull)
+
+    assignedId Int?
+    assigned   IncentiveAssigned? @relation(fields: [assignedId], references: [id], onDelete: Cascade)
+    releasedAt DateTime? // if claimed online, it should be released when they claim their incentives.
+
+    createdBy Int?
+    updatedBy Int?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([incentiveId, eventAttendeeId])
+}
