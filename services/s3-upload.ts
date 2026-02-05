@@ -10,9 +10,11 @@ export const uploadFile = async (
     folder: TFolderUploadGroups,
     type?: string
 ) => {
+    const key = `${folder}/${fileName}`;
+
     const params = {
-        Bucket: process.env.AWS_S3_BUCKET_NAME,
-        Key: `${folder}/${fileName}`,
+        Bucket: process.env.AWS_S3_BUCKET_NAME!,
+        Key: key,
         Body: file,
         ContentType: type,
     };
@@ -24,8 +26,9 @@ export const uploadFile = async (
     });
 
     await upload.done();
-    return `${getS3BaseURL()}${params.Key}`;
+    return `${getS3BaseURL(folder)}/${fileName}`;
 };
+
 
 // import { Readable } from "stream";
 // import { PutObjectCommand } from "@aws-sdk/client-s3";
