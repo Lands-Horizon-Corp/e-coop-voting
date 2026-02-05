@@ -10,18 +10,15 @@ export const uploadFile = async (
     folder: TFolderUploadGroups,
     type?: string
 ) => {
-    const key = `${folder}/${fileName}`;
-
-    const params = {
-        Bucket: process.env.AWS_S3_BUCKET_NAME!,
-        Key: key,
-        Body: file,
-        ContentType: type,
-    };
-
     const upload = new Upload({
         client: s3Client,
-        params,
+        params: {
+            Bucket: process.env.AWS_S3_BUCKET_NAME!,
+            Key: `${folder}/${fileName}`,
+            Body: file,
+            ContentType: type,
+            ACL: "public-read", 
+        },
         leavePartsOnError: false,
     });
 
