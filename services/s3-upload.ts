@@ -32,7 +32,8 @@ export const uploadFile = async (
     Key: `${folder}/${fileName}`,
   });
 
-  const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+  const oneYearInSeconds = 365 * 24 * 60 * 60;
+  const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: oneYearInSeconds });
 
   return signedUrl;
 };
