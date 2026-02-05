@@ -17,7 +17,6 @@ export const uploadFile = async (
             Key: `${folder}/${fileName}`,
             Body: file,
             ContentType: type,
-            ACL: "public-read", 
         },
         leavePartsOnError: false,
     });

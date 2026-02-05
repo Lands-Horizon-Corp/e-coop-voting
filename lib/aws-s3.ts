@@ -14,7 +14,7 @@ const s3Client = new S3Client({
         accessKeyId: S3_ACCESSKEY_ID,
         secretAccessKey: S3_SECRET_ACCESS_KEY,
     },
-    forcePathStyle: false,
+    forcePathStyle: true,
 });
 
 export const getS3BaseURL = (
