@@ -39,8 +39,13 @@ const ImportFileModal = ({ state, onClose, onCancel,id, onOpenSkippedModal }: Pr
             const wb = read(event.target?.result);
             const sheets = wb.SheetNames;
             if (sheets.length) {
-               const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-               setMembers(rows);
+               const rows = utils.sheet_to_json<any>(wb.Sheets[sheets[0]]);
+               const filtered = rows.filter((row) => {
+                  const firstName = row.firstName?.toString().trim();
+                  const lastName = row.lastName?.toString().trim(); 
+                  return Boolean(firstName || lastName);
+               });
+               setMembers(filtered);
             }
          };
          reader.readAsArrayBuffer(file);
