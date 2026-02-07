@@ -78,7 +78,7 @@ const SideBar = async (props: Props) => {
                         alt="ECoop Screenshot"
                         className="size-8 object-contain inline"
                     />
-                    Ecoop is comming soon! 🎉
+                    Ecoop is coming soon! 🎉
                 </Button>
             </AceAdsDrawer>
         </div>

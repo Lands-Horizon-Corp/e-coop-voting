@@ -18,7 +18,7 @@ const EventsPage = async () => {
                         alt="ECoop Screenshot"
                         className="size-8 object-contain inline"
                     />
-                    New Ecoop (Cloud Based) is comming soon! 🎉
+                    New Ecoop (Cloud Based) is coming soon! 🎉
                 </Button>
             </AceAdsDrawer>
             <div className="flex text-sm py-4 mt-8 gap-y-4 items-center gap-x-4 text-foreground/50 w-full px-8 justify-between">

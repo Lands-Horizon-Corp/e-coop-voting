@@ -26,7 +26,7 @@ const layout = ({ params, children }: Props) => {
                         alt="ECoop Screenshot"
                         className="size-8 object-contain inline"
                     />
-                    New Ecoop (Cloud Based) is comming soon! 🎉
+                    New Ecoop (Cloud Based) is coming soon! 🎉
                 </Button>
             </AceAdsDrawer>
         </>
