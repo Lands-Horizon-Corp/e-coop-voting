@@ -34,7 +34,6 @@ export const useUpdateElectionSettings = ({ params }: TParams) => {
                 router.refresh();
                 return response.data;
             } catch (e) {
-                console.log(e);
                 const errorMessage = handleAxiosErrorMessage(e);
                 toast.error(errorMessage, {
                     action: {

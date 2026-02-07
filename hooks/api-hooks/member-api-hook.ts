@@ -359,7 +359,6 @@ export const useVoterAuthorizationAssist = (
                 onAuthorize(request.data);
                 return request.data;
             } catch (e) {
-                console.log("error", e);
                 const errorMessage = handleAxiosErrorMessage(e);
                 toast.error(errorMessage);
                 throw errorMessage;

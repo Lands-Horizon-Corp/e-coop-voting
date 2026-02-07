@@ -158,8 +158,6 @@ export const PATCH = async (
             .flat();
 
         const endTime = performance.now();
-        console.log(`Execution Time: ${(endTime - startTime) / 1000} seconds`);
-
         return NextResponse.json({
             updatedMembers: successfulUpdates.slice(0, 5),
             totalUpdated: successfulUpdates.length,
