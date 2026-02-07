@@ -71,6 +71,13 @@ export const POST = async (req: NextRequest, { params }: TParams) => {
             const isBirthdayValid =
                 birthday && isSameDayIgnoreTimezone(voter.birthday, birthday);
 
+
+
+            console.log("Comparing birthdays...");
+            console.log("Voter birthday (from DB):", voter.birthday);
+            console.log("Input birthday:", birthday);
+            console.log("Is birthday valid:", isBirthdayValid);
+
             if (!isBirthdayValid) {
                 return NextResponse.json(
                     { message: "Invalid verification. incorrect Birthday" },
