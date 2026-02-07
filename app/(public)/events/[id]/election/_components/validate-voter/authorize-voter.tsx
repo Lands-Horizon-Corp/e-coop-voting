@@ -133,13 +133,23 @@ const AuthorizeVoter = ({
                         Birthday{" "}
                         <span className="opacity-50 text-xs">(mm/dd/yyyy)</span>
                       </FormLabel>
+
                       <FormControl>
                         <BirthdayInput
-                          value={field.value}
-                          onChange={field.onChange}
+                          value={
+                            field.value instanceof Date
+                              ? field.value
+                              : field.value
+                                ? new Date(field.value)
+                                : undefined
+                          }
+                          onChange={(date) => {
+                            field.onChange(date);
+                          }}
                           placeholder="MM/DD/YYYY or select date"
                         />
                       </FormControl>
+
                       <FormMessage />
                     </FormItem>
                   )}
