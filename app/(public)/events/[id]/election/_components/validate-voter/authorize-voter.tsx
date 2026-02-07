@@ -129,7 +129,10 @@ const AuthorizeVoter = ({
                   name="birthday"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Birthday</FormLabel>
+                      <FormLabel>
+                        Birthday{" "}
+                        <span className="opacity-50 text-xs">(mm/dd/yyyy)</span>
+                      </FormLabel>
                       <FormControl>
                         <BirthdayInput
                           value={field.value}
