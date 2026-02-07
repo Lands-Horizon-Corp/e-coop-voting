@@ -33,3 +33,13 @@ export const tableToExcel = (table: HTMLDivElement, name: string) => {
 
     document.body.removeChild(link);
 };
+
+export const formatDateTime = (date: Date) => {
+  return new Intl.DateTimeFormat("en-PH", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(new Date(date));
+};
