@@ -6,6 +6,7 @@ import { TMemberAttendeesMinimalInfo } from "@/types";
 import { eventIdSchema } from "@/validation-schema/commons";
 import { routeErrorHandler } from "@/errors/route-error-handler";
 import { attendeeRegisterSchema } from "@/validation-schema/event-registration-voting";
+import { currentUserOrThrowAuthError } from "@/lib/auth";
 
 type TParams = { params: { id: number } };
 
@@ -44,6 +45,8 @@ export const POST = async (req: NextRequest, { params }: TParams) => {
 
         // Regardless, it was implemented instead, so I wrap it to skip all member who dont have date
         // of birth so anyone can type any date on registration and the system will let them pass through
+        console.log( "member birthday: ",memberAttendee.birthday)
+        console.log( "input: ",birthday)
         if (
             memberAttendee.birthday &&
             memberAttendee.event.requireBirthdayVerification
@@ -54,6 +57,11 @@ export const POST = async (req: NextRequest, { params }: TParams) => {
                     { status: 403 }
                 );
         }
+        let registrationAssistId =  null
+        try {
+            const currentUser = await currentUserOrThrowAuthError();
+            registrationAssistId = currentUser.id
+        }catch{}
 
         const registered: TMemberAttendeesMinimalInfo =
             await db.eventAttendees.update({
@@ -71,15 +79,15 @@ export const POST = async (req: NextRequest, { params }: TParams) => {
                     surveyed: true,
                 },
                 where: {
-                    eventId_passbookNumber: {
+                    eventId_passbookNumber: {                                                                                                                   
                         eventId,
                         passbookNumber,
                     },
                 },
-                data: {
+                data: {                     
                     registered: true,
                     registeredAt: new Date(),
-                    registrationAssistId: null,
+                    registrationAssistId: registrationAssistId,
                 },
             });
 
