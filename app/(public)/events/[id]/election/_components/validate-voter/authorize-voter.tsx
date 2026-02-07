@@ -23,7 +23,6 @@ import { cn } from "@/lib/utils";
 import { TElectionWithEvent, TMemberAttendeesMinimalInfo } from "@/types";
 import { useVoterAuthorization } from "@/hooks/public-api-hooks/use-vote-api";
 import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
 import { BirthdayInput } from "@/components/ui/birthday-input";
 
 type Props = {
@@ -62,11 +61,13 @@ const AuthorizeVoter = ({
 
   useEffect(() => {
     form.setFocus("otp");
-  }, [form, form.setFocus]);
+  }, [form]);
 
   const onSubmit = (values: TForm) => {
+    console.log(values);
     getAuthorization(values);
   };
+
   const disabled = isPending || authenticatedVoter !== undefined;
 
   return (
@@ -84,23 +85,22 @@ const AuthorizeVoter = ({
                 key="otp"
                 render={({ field }) => (
                   <FormItem className="gap-y-2">
-                    <p className="text-lg text-center ">OTP</p>
+                    <p className="text-lg text-center">OTP</p>
                     <FormControl>
                       <OTPInput
                         {...field}
                         autoFocus
                         maxLength={6}
                         disabled={disabled}
-                        onComplete={() => {
-                          if (!electionWithEvent.allowBirthdayVerification)
-                            onSubmit({
-                              passbookNumber: voter.passbookNumber,
-                              otp: form.getValues("otp"),
-                            });
-                        }}
                         inputMode="text"
                         pattern="^[a-zA-Z0-9]+$"
                         containerClassName="group flex items-center has-[:disabled]:opacity-30"
+                        onComplete={() => {
+                          if (!electionWithEvent.allowBirthdayVerification) {
+                            // Use form.handleSubmit to include all fields (OTP + birthday)
+                            form.handleSubmit(onSubmit)();
+                          }
+                        }}
                         render={({ slots }) => (
                           <>
                             <div className="flex">
@@ -133,7 +133,6 @@ const AuthorizeVoter = ({
                         Birthday{" "}
                         <span className="opacity-50 text-xs">(mm/dd/yyyy)</span>
                       </FormLabel>
-
                       <FormControl>
                         <BirthdayInput
                           value={
@@ -144,54 +143,47 @@ const AuthorizeVoter = ({
                                 : undefined
                           }
                           onChange={(date) => {
-                            field.onChange(date);
+                            field.onChange(
+                              date instanceof Date ? date : new Date(date),
+                            );
                           }}
                           placeholder="MM/DD/YYYY or select date"
                         />
                       </FormControl>
-
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               )
             )}
+
             {electionWithEvent.allowBirthdayVerification && (
               <>
-                <div className="flex  items-center gap-x-2">
+                <div className="flex items-center gap-x-2">
                   <Separator className="w-fit flex-grow" />
                   <div>or</div>
                   <Separator className="w-fit flex-grow" />
                 </div>
-                {!isBirthdayVerification ? (
-                  <Button
-                    variant={"outline"}
-                    className="w-full"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsBirthdayVerification(!isBirthdayVerification);
-                    }}
-                  >
-                    Birthday Verification
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    className="w-full"
-                    variant={"outline"}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsBirthdayVerification(!isBirthdayVerification);
-                    }}
-                  >
-                    OPT Verification
-                  </Button>
-                )}
+                <Button
+                  type="button"
+                  className="w-full"
+                  variant={"outline"}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsBirthdayVerification(!isBirthdayVerification);
+                  }}
+                >
+                  {isBirthdayVerification
+                    ? "OTP Verification"
+                    : "Birthday Verification"}
+                </Button>
               </>
             )}
+
             {isError && error && (
               <ErrorAlert title="Voter Check Error" message={error} />
             )}
+
             <Button disabled={disabled} className="w-full" type="submit">
               {isPending || authenticatedVoter !== undefined ? (
                 <Loader2 className="h-3 w-3 animate-spin" strokeWidth={1} />
@@ -199,6 +191,7 @@ const AuthorizeVoter = ({
                 "Vote"
               )}
             </Button>
+
             {onUnselect && (
               <p
                 onClick={onUnselect}
