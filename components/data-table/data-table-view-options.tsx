@@ -1,9 +1,10 @@
-"use client"
+"use client";
 
-import { Settings2 } from "lucide-react"
-import { Table } from "@tanstack/react-table"
+import { useState } from "react";
+import { Settings2 } from "lucide-react";
+import { Table } from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -11,20 +12,22 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 interface DataTableViewOptionsProps<TData> {
-    className? : string,
-  table: Table<TData>
+  className?: string;
+  table: Table<TData>;
 }
 
 export default function DataTableViewOptions<TData>({
   table,
-  className
+  className,
 }: DataTableViewOptionsProps<TData>) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="secondary"
@@ -41,7 +44,7 @@ export default function DataTableViewOptions<TData>({
           .getAllColumns()
           .filter(
             (column) =>
-              typeof column.accessorFn !== "undefined" && column.getCanHide()
+              typeof column.accessorFn !== "undefined" && column.getCanHide(),
           )
           .map((column) => {
             return (
@@ -49,13 +52,23 @@ export default function DataTableViewOptions<TData>({
                 key={column.id}
                 className="capitalize"
                 checked={column.getIsVisible()}
-                onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                onCheckedChange={(value) => {
+                  column.toggleVisibility(!!value);
+                  setOpen(true);
+                }}
+                onClick={(e) => {
+                  setOpen(true);
+                }}
+                onSelect={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
               >
                 {column.id}
               </DropdownMenuCheckboxItem>
-            )
+            );
           })}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
