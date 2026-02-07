@@ -1,12 +1,12 @@
 import { SignJWT } from "jose";
 import db from "@/lib/database";
-import { isSameDay } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
 
 import { routeErrorHandler } from "@/errors/route-error-handler";
 import { voterVerificationSchema } from "@/validation-schema/event-registration-voting";
 import { TVoteAuthorizationPayload } from "@/types";
 import { eventIdParamSchema } from "@/validation-schema/api-params";
+import { isSameDayIgnoreTimezone } from "@/lib/utils";
 
 type TParams = { params: { id: number } };
 
@@ -68,7 +68,7 @@ export const POST = async (req: NextRequest, { params }: TParams) => {
         // Regardless, it was implemented instead, so I wrap it to skip all member who dont have date
         // of birth even if the elction settings require birthday. 
         if (election.allowBirthdayVerification && voter.birthday !== null) {
-            if (!birthday || !isSameDay(voter.birthday, birthday))
+            if (!birthday || !isSameDayIgnoreTimezone(voter.birthday, birthday))
                 return NextResponse.json(
                     { message: "Invalid birthdate, please try again" },
                     { status: 400 }

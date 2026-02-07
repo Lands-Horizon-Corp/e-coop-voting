@@ -1,6 +1,5 @@
 import { SignJWT } from "jose";
 import db from "@/lib/database";
-import { isSameDay } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
 
 import { routeErrorHandler } from "@/errors/route-error-handler";
@@ -9,6 +8,7 @@ import {
     voterVerificationSchema,
 } from "@/validation-schema/event-registration-voting";
 import { TVoteAuthorizationPayload } from "@/types";
+import { isSameDayIgnoreTimezone } from "@/lib/utils";
 
 type TParams = { params: { id: number; passbookNumber: number } };
 
@@ -69,7 +69,7 @@ export const POST = async (req: NextRequest, { params }: TParams) => {
             }
 
             const isBirthdayValid =
-                birthday && isSameDay(voter.birthday, birthday);
+                birthday && isSameDayIgnoreTimezone(voter.birthday, birthday);
 
             if (!isBirthdayValid) {
                 return NextResponse.json(

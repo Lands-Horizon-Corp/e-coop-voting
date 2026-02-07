@@ -1,4 +1,4 @@
-import { isSameDay } from "date-fns";
+
 import { NextRequest, NextResponse } from "next/server";
 
 import db from "@/lib/database";
@@ -7,6 +7,7 @@ import { eventIdSchema } from "@/validation-schema/commons";
 import { routeErrorHandler } from "@/errors/route-error-handler";
 import { attendeeRegisterSchema } from "@/validation-schema/event-registration-voting";
 import { currentUserOrThrowAuthError } from "@/lib/auth";
+import { isSameDayIgnoreTimezone } from "@/lib/utils";
 
 type TParams = { params: { id: number } };
 
@@ -49,7 +50,7 @@ export const POST = async (req: NextRequest, { params }: TParams) => {
             memberAttendee.birthday &&
             memberAttendee.event.requireBirthdayVerification
         ) {
-            if (!birthday || !isSameDay(birthday, memberAttendee.birthday))
+            if (!birthday || !isSameDayIgnoreTimezone(birthday, memberAttendee.birthday))
                 return NextResponse.json(
                     { message: "Wrong birthday, please try again" },
                     { status: 403 }
