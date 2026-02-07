@@ -209,8 +209,16 @@ const CreateMemberModal = ({ eventId, state, onClose, onCancel }: Props) => {
                       </FormLabel>
                       <FormControl>
                         <BirthdayInput
-                          value={field.value}
-                          onChange={field.onChange}
+                          value={
+                            field.value instanceof Date
+                              ? field.value
+                              : field.value
+                                ? new Date(field.value)
+                                : undefined
+                          }
+                          onChange={(date) => {
+                            field.onChange(date);
+                          }}
                           placeholder="MM/DD/YYYY or select date"
                         />
                       </FormControl>
