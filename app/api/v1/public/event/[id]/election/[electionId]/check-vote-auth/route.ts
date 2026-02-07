@@ -54,6 +54,7 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
                 voted: true,
             },
         });
+        console.log(voter)
 
         if (!voter)
             return NextResponse.json(

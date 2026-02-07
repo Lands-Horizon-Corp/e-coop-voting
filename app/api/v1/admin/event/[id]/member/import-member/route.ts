@@ -56,6 +56,7 @@ const mapAndFilterDuplicates = (
         const PBNo = member.passbookNumber
             ? String(member.passbookNumber)
             : generateOTP(6);
+            console.log(member)
 
         return {
             ...member,
