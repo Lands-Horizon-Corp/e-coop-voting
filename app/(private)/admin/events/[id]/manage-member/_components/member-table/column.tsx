@@ -575,6 +575,17 @@ const columns = ({
 }): ColumnDef<TMemberWithEventElectionId>[] => {
   return [
     {
+      id: "actions",
+      header: ({ column }) => (
+        <DataTableColHeader column={column} title="Actions" />
+      ),
+      cell: ({ row }) => (
+        <div className="flex justify-start">
+          <Actions event={event} member={row.original} />
+        </div>
+      ),
+    },
+    {
       accessorKey: "lastName",
       header: ({ column }) => (
         <DataTableColHeader column={column} title="Last Name" />
@@ -736,18 +747,6 @@ const columns = ({
       enableSorting: false,
     },
 
-    // Remaining columns
-    {
-      id: "actions",
-      header: ({ column }) => (
-        <DataTableColHeader column={column} title="Actions" />
-      ),
-      cell: ({ row }) => (
-        <div className="flex justify-start">
-          <Actions event={event} member={row.original} />
-        </div>
-      ),
-    },
     {
       id: "PB QR",
       accessorKey: "passbookNumber",
