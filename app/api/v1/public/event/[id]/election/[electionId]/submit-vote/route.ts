@@ -6,9 +6,9 @@ import { TVoteAuthorizationPayload } from "@/types";
 import { routeErrorHandler } from "@/errors/route-error-handler";
 
 import { sendMail } from "@/lib/mailer";
-import { MailchimpMailer } from "@/lib/mailer/mailchimp";
 import { memberEmailSchema } from "@/validation-schema/member";
 import { chosenCandidateIds } from "@/validation-schema/election";
+import { ResendMailer } from "@/lib/mailer/resend";
 
 export const POST = async (req: NextRequest) => {
     try {
@@ -153,7 +153,7 @@ export const POST = async (req: NextRequest) => {
                         },
                     },
                 ],
-                new MailchimpMailer()
+                new ResendMailer()
             );
         }
 

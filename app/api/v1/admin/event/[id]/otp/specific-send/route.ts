@@ -2,12 +2,12 @@ import db from "@/lib/database";
 import { NextRequest, NextResponse } from "next/server";
 
 import { sendMail } from "@/lib/mailer";
-import { MailchimpMailer } from "@/lib/mailer/mailchimp";
 import { currentUserOrThrowAuthError } from "@/lib/auth";
 import { eventIdSchema } from "@/validation-schema/commons";
 import { memberEmailSchema } from "@/validation-schema/member";
 import { routeErrorHandler } from "@/errors/route-error-handler";
 import { passbookNumberSchema } from "@/validation-schema/commons";
+import { ResendMailer } from "@/lib/mailer/resend";
 
 type TParams = { params: { id: number } };
 
@@ -84,7 +84,7 @@ export const POST = async (req: NextRequest, { params }: TParams) => {
                     },
                 },
             ],
-            new MailchimpMailer()
+            new ResendMailer()
         );
 
         if (mailTask.errorSend.length > 0) {

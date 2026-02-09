@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { sendMail } from "@/lib/mailer";
 import { ISendMailRawProps, TMailErrorSend } from "@/types";
-import { MailchimpMailer } from "@/lib/mailer/mailchimp";
 import { currentUserOrThrowAuthError } from "@/lib/auth";
 import { eventIdSchema } from "@/validation-schema/commons";
 import { memberEmailSchema } from "@/validation-schema/member";
 import { routeErrorHandler } from "@/errors/route-error-handler";
 import { FUNCTION_DURATION } from "@/constants";
+import { ResendMailer } from "@/lib/mailer/resend";
 
 type TParams = { params: { id: number } };
 
@@ -89,7 +89,7 @@ export const POST = async (req: NextRequest, { params }: TParams) => {
 
         const { errorSend, successSend } = await sendMail(
             mails,
-            new MailchimpMailer()
+            new ResendMailer()
         );
 
         await db.eventAttendees.updateMany({
