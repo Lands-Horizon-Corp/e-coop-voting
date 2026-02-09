@@ -126,7 +126,7 @@ export const POST = async (req: NextRequest) => {
                 participantName: `${firstName} ${lastName}`,
                 eventLink: `${process.env.DEPLOYMENT_URL}/events/${election.event.id}`,
                 voted: "",
-                ecoopLogo: `${process.env.DEPLOYMENT_URL}/images/coop-logo.png`,
+                ecoopLogo: `${process.env.DEPLOYMENT_URL}/images/e-coop-logo.webp`,
             };
 
             electionPosition.map((position) => {
