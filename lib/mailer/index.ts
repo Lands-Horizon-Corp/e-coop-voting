@@ -11,6 +11,7 @@ import {
     TMailSendObject,
     ISendMailRawProps,
 } from "@/types";
+import { MailchimpMailer } from "./mailchimp";
 
 const templateCache = new Map<string, handlebars.TemplateDelegate>();
 
@@ -32,6 +33,15 @@ const chunkArray = <T>(arr: T[], chunkSize: number): T[][] => {
         arr.slice(i * chunkSize, i * chunkSize + chunkSize)
     );
 };
+
+type TEmail ='mailchip' | 'resender'
+export const mails = async (sendMailsContent: ISendMailRawProps[], email: TEmail= 'mailchip'): Promise<TMailSendObject>  => {
+    if(email === 'mailchip'){
+        return sendMail(sendMailsContent, new MailchimpMailer())
+    }
+    return sendMail(sendMailsContent, new MailchimpMailer())
+}
+
 
 export const sendMail = async (
     sendMailsContent: ISendMailRawProps[],
