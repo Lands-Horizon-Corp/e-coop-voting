@@ -84,6 +84,8 @@ const RegisterAttendance = ({ event, member, onUnselect }: Props) => {
                           field.onChange(date);
                         }}
                         placeholder="MM/DD/YYYY or select date"
+                        className="text-xl py-4 px-4"
+                        buttonClassName="h-12 w-12"
                       />
                       <FormMessage />
                     </FormItem>

@@ -7,17 +7,22 @@ import { Calendar } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Calendar as CalendarComponent } from "./calendar";
 import { format, parse, isValid } from "date-fns";
+import { cn } from "@/lib/utils";
 
 interface BirthdayInputProps {
   value: Date | string | undefined;
   onChange: (date: Date | string) => void;
   placeholder?: string;
+  className?: string;
+  buttonClassName?: string;
 }
 
 export function BirthdayInput({
   value,
   onChange,
   placeholder = "MM/DD/YYYY or select date",
+  className = "",
+  buttonClassName = "",
 }: BirthdayInputProps) {
   const [inputValue, setInputValue] = React.useState("");
   const [isOpen, setIsOpen] = React.useState(false);
@@ -104,7 +109,7 @@ export function BirthdayInput({
         onBlur={handleBlur}
         placeholder={placeholder}
         maxLength={10}
-        className="flex-1"
+        className={cn("flex-1", className)}
       />
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
@@ -112,7 +117,7 @@ export function BirthdayInput({
             variant="outline"
             size="icon"
             type="button"
-            className="h-10 w-10 bg-transparent"
+            className={cn("h-10 w-10 bg-transparent", buttonClassName)}
           >
             <Calendar className="h-4 w-4" />
           </Button>

@@ -38,7 +38,9 @@ const AuthorizeVoter = ({
   onUnselect,
   onAuthorize,
 }: Props) => {
-  const [isBirthdayVerification, setIsBirthdayVerification] = useState(false);
+  const [isBirthdayVerification, setIsBirthdayVerification] = useState(
+    electionWithEvent.allowBirthdayVerification,
+  );
 
   type TForm = z.infer<typeof voterVerificationFormSchema>;
 
@@ -148,6 +150,8 @@ const AuthorizeVoter = ({
                             );
                           }}
                           placeholder="MM/DD/YYYY or select date"
+                          className="text-xl py-4 px-4"
+                          buttonClassName="h-12 w-12"
                         />
                       </FormControl>
                       <FormMessage />
