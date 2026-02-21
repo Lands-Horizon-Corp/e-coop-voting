@@ -45,7 +45,7 @@ export const POST = async (req: NextRequest) => {
               },
             },
             createdBy: user.id,
-            branchId:data.branchId,
+            branchId: data.branchId,
             coopId: data.coopId,
           }
         : {
@@ -54,7 +54,7 @@ export const POST = async (req: NextRequest) => {
             date: data.date,
             location: data.location,
             category: data.category,
-            branchId:data.branchId,
+            branchId: data.branchId,
             coopId: data.coopId,
             deleted: false,
             coverImage: data.coverImage,
@@ -62,8 +62,8 @@ export const POST = async (req: NextRequest) => {
           },
       include: {
         election: true,
-        coop:true,
-        branch:true,
+        coop: true,
+        branch: true,
       },
     });
     return NextResponse.json(CreateEvent);
@@ -97,9 +97,9 @@ export const GET = async (req: NextRequest) => {
 
       const filteredCondition = conditionSet.find((condition) =>
         condition.roles.includes(currentRole),
-      )
+      );
 
-      return filteredCondition ? filteredCondition.condition : {}
+      return filteredCondition ? filteredCondition.condition : {};
     };
 
     const getAllEvents = await db.event.findMany({
@@ -117,8 +117,12 @@ export const GET = async (req: NextRequest) => {
         date: true,
         election: true,
         coverImage: true,
-        coop:true,
-        branch:true,
+        coop: true,
+        branch: true,
+        isRegistrationOpen: true,
+        registrationOnEvent: true,
+        defaultMemberSearchMode: true,
+        requireBirthdayVerification: true,
       },
     });
 
