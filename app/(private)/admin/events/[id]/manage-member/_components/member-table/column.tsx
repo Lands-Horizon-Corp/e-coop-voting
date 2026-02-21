@@ -78,6 +78,8 @@ const ViewMemberQr = ({ member }: { member: TMember }) => {
                   qrClassName="size-[250px] lg:size-[350px]"
                   fileName={member.passbookNumber + "-pasbook-qr"}
                   value={member.passbookNumber}
+                  title={`${member.firstName} ${member.lastName}`}
+                  description={member.passbookNumber}
                   enableDownload
                 />
               </div>
