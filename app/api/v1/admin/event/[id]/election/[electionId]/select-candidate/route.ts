@@ -9,14 +9,23 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
   try {
     const { searchParams } = new URL(req.url);
 
-    // 1. Scrub the input: Remove commas, handle special characters, and split
+    // 1. Scrub the input
     const rawSearch = searchParams.get("search")?.trim() || "";
+
+    // Cleaning logic
     const cleanSearch = rawSearch
-      .replace(/,/g, " ") // Replace commas with spaces
-      .replace(/[\u0000-\u001F]/g, "") // Strip hidden control characters (like the  seen in your data)
+      .replace(/,/g, " ")
+      .replace(/[\u0000-\u001F]/g, "")
       .trim();
 
     const searchKeywords = cleanSearch.split(/\s+/).filter(Boolean);
+
+    // --- DEBUG LOGS START ---
+    console.log("--- SEARCH DEBUG ---");
+    console.log("Raw Search Input:", `"${rawSearch}"`);
+    console.log("Cleaned Search:", `"${cleanSearch}"`);
+    console.log("Keywords Array:", searchKeywords);
+    // --- DEBUG LOGS END ---
 
     const eventId = eventIdSchema.parse(params.id);
     const electionId = eventIdSchema.parse(params.electionId);
@@ -28,23 +37,21 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
     });
     const candidatePassbooks = candidates.map((c) => c.passbookNumber);
 
+    console.log("Excluded Passbooks (Candidates):", candidatePassbooks);
+
     /**
      * 3. Robust Search Filter
-     * This checks if the ENTIRE search string matches the passbook,
-     * OR if ANY of the keywords match ANY of the name fields.
      */
     const searchFilter =
       searchKeywords.length > 0
         ? {
             OR: [
-              // Check if the raw string (like "P-638") is the passbook
               {
                 passbookNumber: {
                   contains: cleanSearch,
                   mode: "insensitive" as const,
                 },
               },
-              // Check if the keywords appear across the name fields
               {
                 AND: searchKeywords.map((word) => ({
                   OR: [
@@ -65,7 +72,7 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
                         contains: word,
                         mode: "insensitive" as const,
                       },
-                    }, // Ensure your schema uses 'middleName'
+                    },
                   ],
                 })),
               },
@@ -83,8 +90,12 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
       orderBy: [{ lastName: "asc" }, { firstName: "asc" }],
     });
 
+    console.log(`Results Found: ${filteredEventAttendees.length}`);
+    console.log("--------------------");
+
     return NextResponse.json(filteredEventAttendees);
   } catch (e) {
+    console.error("Search Route Error:", e);
     return routeErrorHandler(e, req);
   }
 };
