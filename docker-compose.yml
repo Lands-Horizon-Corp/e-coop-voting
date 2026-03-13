@@ -1,6 +1,7 @@
 services:
     db:
         image: postgres:16.6
+        container_name: ace_postgres_db # Explicit name to keep it separate
         restart: always
         shm_size: 128mb
         environment:
@@ -8,9 +9,9 @@ services:
             POSTGRES_PASSWORD: acedb25
             POSTGRES_DB: ace-system
         ports:
-            - "5432:5432"
+            - "5433:5432" # Computer uses 5433, Container uses 5432
         volumes:
-            - pgdata:/var/lib/postgresql/data
+            - ace_pgdata:/var/lib/postgresql/data
 
 volumes:
-    pgdata:
+    ace_pgdata: # Unique volume name so data doesn't mix
