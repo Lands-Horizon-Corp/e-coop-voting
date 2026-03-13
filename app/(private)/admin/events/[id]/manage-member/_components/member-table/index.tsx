@@ -85,7 +85,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 className="w-full pl-8 bg-popover text-muted-foreground placeholder:text-muted-foreground placeholder:text-[min(14px,3vw)] text-sm md:text-base ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
             />
         );
-    }
+    },
 );
 
 SearchInput.displayName = "SearchInput";
@@ -106,7 +106,7 @@ const MemberTable = ({ id, user, event }: Props) => {
     const [globalFilter, setGlobalFilter] = useState<string>("");
     const [onSkippedMemberModal, setOnSkippedMemberModal] = useState(false);
 
-    const { data, isError, isLoading, isFetching, refetch } =
+    const { data, isError, isPending, isFetching, refetch } =
         useEventMembers(id);
 
     const handleEventHasSubChange = useCallback(() => refetch(), [refetch]);
@@ -202,7 +202,7 @@ const MemberTable = ({ id, user, event }: Props) => {
                                                     if (val.length === 0)
                                                         return;
                                                     setGlobalFilter(
-                                                        val[0].rawValue
+                                                        val[0].rawValue,
                                                     );
                                                 },
                                             })
@@ -243,7 +243,7 @@ const MemberTable = ({ id, user, event }: Props) => {
                                     <Button
                                         size="sm"
                                         className={cn(
-                                            "flex  rounded-md justify-center items-center md:space-x-2 md:min-w-[7rem]"
+                                            "flex  rounded-md justify-center items-center md:space-x-2 md:min-w-[7rem]",
                                         )}
                                         onClick={() => {
                                             setCreateMember(true);
@@ -303,7 +303,7 @@ const MemberTable = ({ id, user, event }: Props) => {
                             <Button
                                 size="sm"
                                 className={cn(
-                                    "flex  gap-x-2  rounded-md justify-center items-center md:space-x-2 md:min-w-[7rem]"
+                                    "flex  gap-x-2  rounded-md justify-center items-center md:space-x-2 md:min-w-[7rem]",
                                 )}
                                 disabled={isBroadcasting}
                                 onClick={() => setExportPbQrs(true)}
@@ -329,7 +329,7 @@ const MemberTable = ({ id, user, event }: Props) => {
                                     <Button
                                         size="sm"
                                         className={cn(
-                                            "flex  gap-x-2  rounded-md justify-center items-center md:space-x-2 md:min-w-[7rem]"
+                                            "flex  gap-x-2  rounded-md justify-center items-center md:space-x-2 md:min-w-[7rem]",
                                         )}
                                         disabled={isBroadcasting}
                                         onClick={() => {
@@ -370,7 +370,7 @@ const MemberTable = ({ id, user, event }: Props) => {
                                     <Button
                                         size="sm"
                                         className={cn(
-                                            "flex-none flex  rounded-md justify-center items-center md:space-x-2 md:min-w-[7rem]"
+                                            "flex-none flex  rounded-md justify-center items-center md:space-x-2 md:min-w-[7rem]",
                                         )}
                                         onClick={() => {
                                             setOnImportModal(true);
@@ -393,7 +393,7 @@ const MemberTable = ({ id, user, event }: Props) => {
             <DataTable
                 className="py-5 overflow-y-auto min-h-[65vh] overflow-auto overscroll-y-none flex-1 bg-background dark:bg-secondary/30 rounded-2xl"
                 isError={isError}
-                isLoading={isLoading || isFetching}
+                isLoading={isPending || isFetching}
                 table={table}
             />
             <div className="lg:hidden ">
