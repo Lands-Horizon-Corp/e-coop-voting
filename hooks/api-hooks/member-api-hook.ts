@@ -21,11 +21,11 @@ import { memberToggleSurveyedSchema } from "@/validation-schema/member";
 
 export const useEventMembers = (eventId: number) => {
     return useQuery<TMemberWithEventElectionId[], string>({
-        queryKey: ["all-event-members-list-query"],
+        queryKey: ["all-event-members-list-query", eventId],
         queryFn: async () => {
             try {
                 const response = await axios.get(
-                    `/api/v1/admin/event/${eventId}/member`
+                    `/api/v1/admin/event/${eventId}/member`,
                 );
 
                 return response.data;
@@ -39,14 +39,14 @@ export const useEventMembers = (eventId: number) => {
 
 export const FilteredEventMembersForCandidateSelection = (
     eventId: number,
-    electionId: number
+    electionId: number,
 ) => {
     const members = useQuery<TMemberWithEventElectionId[], string>({
         queryKey: ["membersOnCandidate-list-query"],
         queryFn: async () => {
             try {
                 const response = await axios.get(
-                    `/api/v1/admin/event/${eventId}/election/${electionId}/select-candidate`
+                    `/api/v1/admin/event/${eventId}/election/${electionId}/select-candidate`,
                 );
                 return response.data;
             } catch (e) {
@@ -69,7 +69,7 @@ export const deleteMember = () => {
         mutationFn: async ({ eventId, memberId }) => {
             try {
                 const response = await axios.delete(
-                    `/api/v1/admin/event/${eventId}/member/${memberId}`
+                    `/api/v1/admin/event/${eventId}/member/${memberId}`,
                 );
                 queryClient.invalidateQueries({
                     queryKey: ["all-event-members-list-query"],
@@ -105,7 +105,7 @@ export const createMember = ({ onCancelandReset }: Props) => {
                 };
                 const response = await axios.post(
                     `/api/v1/admin/event/${eventId}/member/`,
-                    newMember
+                    newMember,
                 );
                 return response.data;
             } catch (e) {
@@ -144,7 +144,7 @@ export const updateMember = ({ onCancelandReset }: Props) => {
             try {
                 const response = await axios.patch(
                     `/api/v1/admin/event/${eventId}/member/${memberId}`,
-                    member
+                    member,
                 );
                 return response.data;
             } catch (e) {
@@ -194,7 +194,7 @@ export const createManyMember = ({
             try {
                 const response = await axios.post(
                     `/api/v1/admin/event/${eventId}/member/import-member`,
-                    member
+                    member,
                 );
 
                 return response.data;
@@ -239,7 +239,7 @@ export const createManyMember = ({
                 });
                 setTimeout(() => {
                     toast.success(
-                        `New ${newMembers.length} Members Added successfully`
+                        `New ${newMembers.length} Members Added successfully`,
                     );
                 }, 1000);
                 onCancelandReset();
@@ -256,7 +256,7 @@ export const createManyMember = ({
 
 export const useBroadcastOTP = (
     eventId: number,
-    onSuccessSend?: (response: TMailSendObject) => void
+    onSuccessSend?: (response: TMailSendObject) => void,
 ) => {
     const {
         data: broadcastData,
@@ -267,7 +267,7 @@ export const useBroadcastOTP = (
         mutationFn: async () => {
             try {
                 const request = await axios.post(
-                    `/api/v1/admin/event/${eventId}/otp/broadcast-otp`
+                    `/api/v1/admin/event/${eventId}/otp/broadcast-otp`,
                 );
 
                 onSuccessSend?.(request.data);
@@ -286,7 +286,7 @@ export const useBroadcastOTP = (
 export const useOtpSend = (
     eventId: number,
     passbookNumber: string,
-    onSendSuccess?: (data: TMemberWithEventElectionId) => void
+    onSendSuccess?: (data: TMemberWithEventElectionId) => void,
 ) => {
     return useMutation<TMemberWithEventElectionId, string>({
         mutationKey: [`send-otp-${eventId}`],
@@ -294,7 +294,7 @@ export const useOtpSend = (
             try {
                 const request = await axios.post(
                     `/api/v1/admin/event/${eventId}/otp/specific-send`,
-                    { passbookNumber }
+                    { passbookNumber },
                 );
                 toast.success("OTP has been sent");
                 onSendSuccess?.(request.data);
@@ -320,7 +320,7 @@ export const getMembersQuorum = (id: number) => {
         queryFn: async () => {
             try {
                 const response = await axios.get(
-                    `/api/v1/admin/event/${id}/member/quorum`
+                    `/api/v1/admin/event/${id}/member/quorum`,
                 );
                 return response.data;
             } catch (e) {
@@ -335,7 +335,7 @@ export const getMembersQuorum = (id: number) => {
 export const useVoterAuthorizationAssist = (
     eventId: number,
     voterId: string,
-    onAuthorize: (voter: TMemberAttendeesMinimalInfo) => void
+    onAuthorize: (voter: TMemberAttendeesMinimalInfo) => void,
 ) => {
     const {
         data: authenticatedVoter,
@@ -354,7 +354,7 @@ export const useVoterAuthorizationAssist = (
                 const request = await axios.post(
                     `/api/v1/admin/event/${eventId}/election/${eventId}/assist-authorize-voter`,
                     data,
-                    { withCredentials: true }
+                    { withCredentials: true },
                 );
                 onAuthorize(request.data);
                 return request.data;
@@ -375,7 +375,7 @@ export const useUpdateEventAttendees = () => {
         mutationFn: async ({ id }: { id: number }) => {
             try {
                 const response = await axios.patch(
-                    `/api/v1/admin/event/${id}/member`
+                    `/api/v1/admin/event/${id}/member`,
                 );
                 const hasUpdates = response.data.totalUpdated > 0;
                 if (hasUpdates) {
@@ -422,9 +422,11 @@ export const useUpdateEventAttendeeSurveyed = ({
             try {
                 const res = await axios.patch(
                     `/api/v1/admin/event/${eventId}/member/${eventAttendeeId}/toggle-survey`,
-                    data
+                    data,
                 );
-                toast.success(data.surveyed ? "Member surveyed" : "Member unsurveyed");
+                toast.success(
+                    data.surveyed ? "Member surveyed" : "Member unsurveyed",
+                );
                 onSuccess?.(res.data);
                 return res.data as TMemberWithEventElectionId;
             } catch (e) {
