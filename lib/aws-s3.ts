@@ -28,7 +28,9 @@ const s3Client = new S3Client({
  * https://t3.storageapi.dev/<bucket>/<folder>
  */
 export const getS3BaseURL = (folder: string = "") => {
-  return `${S3_ENDPOINT}/${S3_BUCKET_NAME}${folder ? `/${folder}` : ""}`;
+  return S3_ENDPOINT.endsWith("/")
+    ? `${S3_ENDPOINT}/${S3_BUCKET_NAME}`
+    : `${S3_ENDPOINT}/${S3_BUCKET_NAME}/`;
 };
 
 /**

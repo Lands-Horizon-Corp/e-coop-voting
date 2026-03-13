@@ -20,13 +20,6 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
 
     const searchKeywords = cleanSearch.split(/\s+/).filter(Boolean);
 
-    // --- DEBUG LOGS START ---
-    console.log("--- SEARCH DEBUG ---");
-    console.log("Raw Search Input:", `"${rawSearch}"`);
-    console.log("Cleaned Search:", `"${cleanSearch}"`);
-    console.log("Keywords Array:", searchKeywords);
-    // --- DEBUG LOGS END ---
-
     const eventId = eventIdSchema.parse(params.id);
     const electionId = eventIdSchema.parse(params.electionId);
 
@@ -36,12 +29,6 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
       select: { passbookNumber: true },
     });
     const candidatePassbooks = candidates.map((c) => c.passbookNumber);
-
-    console.log("Excluded Passbooks (Candidates):", candidatePassbooks);
-
-    /**
-     * 3. Robust Search Filter
-     */
     const searchFilter =
       searchKeywords.length > 0
         ? {
@@ -89,10 +76,6 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
       },
       orderBy: [{ lastName: "asc" }, { firstName: "asc" }],
     });
-
-    console.log(`Results Found: ${filteredEventAttendees.length}`);
-    console.log("--------------------");
-
     return NextResponse.json(filteredEventAttendees);
   } catch (e) {
     console.error("Search Route Error:", e);
