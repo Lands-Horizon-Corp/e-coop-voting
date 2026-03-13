@@ -21,25 +21,25 @@ export const GET = async (req: NextRequest) => {
         let events: Event[] = [];
 
         const getCondition = () => {
-            if (!currentUser) return {};
+            return {};
 
-            const conditionSet: TConditionSet[] = [
-                { roles: [Role.root], condition: {} },
-                {
-                    roles: [Role.coop_root],
-                    condition: { coopId: currentUser.coopId },
-                },
-                {
-                    roles: [Role.admin, Role.staff],
-                    condition: { branchId: currentUser.branchId },
-                },
-            ];
+            // const conditionSet: TConditionSet[] = [
+            //     { roles: [Role.root], condition: {} },
+            //     {
+            //         roles: [Role.coop_root],
+            //         condition: { coopId: currentUser.coopId },
+            //     },
+            //     {
+            //         roles: [Role.admin, Role.staff],
+            //         condition: { branchId: currentUser.branchId },
+            //     },
+            // ];
 
-            const filteredCondition = conditionSet.find((condition) =>
-                condition.roles.includes(currentUser.role),
-            );
+            // const filteredCondition = conditionSet.find((condition) =>
+            //     condition.roles.includes(currentUser.role),
+            // );
 
-            return filteredCondition ? filteredCondition.condition : {};
+            // return filteredCondition ? filteredCondition.condition : {};
         };
 
         events = await db.event.findMany({
