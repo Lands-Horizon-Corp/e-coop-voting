@@ -8,6 +8,7 @@ import EventHeader from "./_components/event-header";
 import { Separator } from "@/components/ui/separator";
 import { eventIdSchema } from "@/validation-schema/commons";
 import EventDetailBar from "./_components/event-detail-bar";
+import { currentUserOrThrowAuthError } from "@/lib/auth";
 
 type Props = {
     children: ReactNode;
@@ -15,6 +16,7 @@ type Props = {
 };
 
 const EventLayout = async ({ children, params }: Props) => {
+    const user = await currentUserOrThrowAuthError();
     const eventIdValidation = eventIdSchema.safeParse(params.id);
 
     if (!eventIdValidation.success)
@@ -33,7 +35,7 @@ const EventLayout = async ({ children, params }: Props) => {
                 <EventHeader params={params} />
                 <BackButton />
             </div>
-            <EventDetailBar eventId={event.id} />
+            <EventDetailBar eventId={event.id} currentUser={user} />
             <div className="flex flex-col bg-background rounded-xl min-h-screen shadow-xl dark:bg-secondary/30 py-2  overflow-x-hidden w-full ">
                 <div className="px-2 w-full">
                     <EventNav event={event} />

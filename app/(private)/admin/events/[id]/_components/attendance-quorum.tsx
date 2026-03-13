@@ -15,12 +15,14 @@ import {
     useUpdateEventRegistrationStatus,
 } from "@/hooks/api-hooks/use-events";
 import { useAttendanceStats } from "@/hooks/api-hooks/attendance-api-hooks";
+import { user } from "next-auth";
 
 interface Props {
     eventId: number;
+    currentUser: user;
 }
 
-const AttendanceQuorum = ({ eventId }: Props) => {
+const AttendanceQuorum = ({ eventId, currentUser }: Props) => {
     const { data: event, isFetching } = useGetEventById({ eventId });
 
     const { mutate: toggleRegistrationOpen, isPending } =
@@ -52,6 +54,7 @@ const AttendanceQuorum = ({ eventId }: Props) => {
                 }
             >
                 <Button
+                    disabled={currentUser.role === "staff"}
                     size="sm"
                     variant={
                         event?.isRegistrationOpen ? "secondary" : "destructive"
@@ -65,7 +68,7 @@ const AttendanceQuorum = ({ eventId }: Props) => {
                         "size-fit p-2 border absolute font-normal group right-2 rounded-xl top-2",
                         event?.isRegistrationOpen
                             ? "text-primary hover:bg-primary/10 hover:text-primary"
-                            : "text-destructive-foreground bg-destructive/30 hover:bg-destructive/40"
+                            : "text-destructive-foreground bg-destructive/30 hover:bg-destructive/40",
                     )}
                 >
                     <PowerIcon
@@ -73,7 +76,7 @@ const AttendanceQuorum = ({ eventId }: Props) => {
                             "size-4 mr-2 text-foreground",
                             event?.isRegistrationOpen
                                 ? "animate-pulse text-primary"
-                                : "text-muted-foreground/40 group-hover:text-destructive-foreground"
+                                : "text-muted-foreground/40 group-hover:text-destructive-foreground",
                         )}
                     />
                     {isFetching || isPending ? (

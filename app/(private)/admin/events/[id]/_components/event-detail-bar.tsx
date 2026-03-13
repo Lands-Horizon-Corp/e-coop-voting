@@ -7,13 +7,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 import LoadingSpinner from "@/components/loading-spinner";
 import { useGetEventById } from "@/hooks/api-hooks/use-events";
 import { CalendarCheck, CalendarDays, MapPin } from "lucide-react";
+import { user } from "next-auth";
 
 interface Props {
     eventId: number;
+    currentUser: user;
 }
 
-const EventDetailBar = ({ eventId }: Props) => {
-    const { data: event, isPending } = useGetEventById({ eventId });
+const EventDetailBar = ({ eventId, currentUser }: Props) => {
+    const { data: event } = useGetEventById({ eventId });
 
     return (
         <div className="p-2 w-full rounded-2xl flex flex-col md:flex-row gap-x-2 gap-y-1 md:justify-between shadow-md bg-background dark:bg-secondary/30">
@@ -58,7 +60,10 @@ const EventDetailBar = ({ eventId }: Props) => {
             {!event ? (
                 <Skeleton className="h-8 w-24 min-w-[400px] min-h-36" />
             ) : (
-                <AttendanceQuorum eventId={event.id} />
+                <AttendanceQuorum
+                    eventId={event.id}
+                    currentUser={currentUser}
+                />
             )}
         </div>
     );
