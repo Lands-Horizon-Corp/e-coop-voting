@@ -1,37 +1,40 @@
 import { user } from "next-auth";
 import { Role } from "@prisma/client";
-import { twMerge } from "tailwind-merge"
-import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from "clsx";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
-export const isAllowed = (roleAllowed: Role[], user : user | false | null | undefined ) => {
-    if(!user) return false;
-    return roleAllowed.includes(user.role);
+export const isAllowed = (
+  roleAllowed: Role[],
+  user: user | false | null | undefined,
+) => {
+  if (!user) return false;
+  return roleAllowed.includes(user.role);
 };
 
 export const tableToExcel = (table: HTMLDivElement, name: string) => {
-    const uri = "data:application/vnd.ms-excel;base64,";
-    const template =
-        '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
-    const base64 = (s: string) => window.btoa(unescape(encodeURIComponent(s)));
-    const format = (s: string, c: Record<string, string>) =>
-        s.replace(/{(\w+)}/g, (m, p) => c[p]);
+  const uri = "data:application/vnd.ms-excel;base64,";
+  const template =
+    '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+  const base64 = (s: string) => window.btoa(unescape(encodeURIComponent(s)));
+  const format = (s: string, c: Record<string, string>) =>
+    s.replace(/{(\w+)}/g, (m, p) => c[p]);
 
-    const ctx = { worksheet: name || "Worksheet", table: table.innerHTML };
-    const excelContent = uri + base64(format(template, ctx));
+  const ctx = { worksheet: name || "Worksheet", table: table.innerHTML };
+  const excelContent = uri + base64(format(template, ctx));
 
-    const link = document.createElement("a");
-    link.href = excelContent;
+  const link = document.createElement("a");
+  link.href = excelContent;
 
-    link.setAttribute("download", name || "table.xls");
+  link.setAttribute("download", name || "table.xls");
 
-    document.body.appendChild(link);
-    link.click();
+  document.body.appendChild(link);
+  link.click();
 
-    document.body.removeChild(link);
+  document.body.removeChild(link);
 };
 
 export const formatDateTime = (date: Date) => {
@@ -44,9 +47,40 @@ export const formatDateTime = (date: Date) => {
   }).format(new Date(date));
 };
 
-export function isSameDayIgnoreTimezone(date1: string | Date, date2: string | Date): boolean {
+export function isSameDayIgnoreTimezone(
+  date1: string | Date,
+  date2: string | Date,
+): boolean {
   const d1 = new Date(date1);
   const d2 = new Date(date2);
   const diff = Math.abs(d1.getTime() - d2.getTime());
   return diff < 24 * 60 * 60 * 1000;
+}
+
+export type BirthdayFormat = "long" | "short";
+
+export function formatBirthday(
+  input: Date | string,
+  format: BirthdayFormat = "long",
+  locale: string = "en-PH",
+): string {
+  if (!input) return "";
+
+  const date = input instanceof Date ? input : new Date(input);
+  if (isNaN(date.getTime())) return "";
+
+  const baseOptions: Record<BirthdayFormat, Intl.DateTimeFormatOptions> = {
+    long: {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    },
+    short: {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    },
+  };
+
+  return new Intl.DateTimeFormat(locale, baseOptions[format]).format(date);
 }

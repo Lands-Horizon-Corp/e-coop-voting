@@ -2,10 +2,10 @@
 import React from "react";
 import { user } from "next-auth";
 
-import MemberTable from "./member-table";
 import { useGetEventById } from "@/hooks/api-hooks/use-events";
 import InvalidPrompt from "@/components/invalid-prompt";
 import LoadingSpinner from "@/components/loading-spinner";
+import MemberSearchPage from "./member-quick-search";
 
 interface Props {
   user: user;
@@ -22,7 +22,7 @@ const Members = ({ user, eventId }: Props) => {
 
   return (
     <>
-      <MemberTable event={event} user={user} id={eventId} />
+      <MemberSearchPage event={event} eventId={eventId} />
     </>
   );
 };
