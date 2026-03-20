@@ -83,31 +83,34 @@ const CreateMemberModal = ({ eventId, state, onClose, onCancel }: Props) => {
 
   const onSubmit = async (formValues: createTMember) => {
     try {
-      if (!imageFile) {
-        createMemberMutation.mutate({
-          member: {
-            ...formValues,
-            picture: formValues.passbookNumber ?? "/images/default.png",
-          },
-          eventId,
-        });
-      } else {
-        const image = await uploadImage.mutateAsync({
-          fileName: `${formValues.passbookNumber.toUpperCase()}.webp`,
+      let finalImagePath = "/images/default.png"; // Default fallback
+
+      // 1. Check if a file actually exists in the form state or hook
+      if (imageFile) {
+        const uploadedUrl = await uploadImage.mutateAsync({
+          // Ensure filename is safe and consistent
+          fileName: `${formValues.passbookNumber.trim().toUpperCase()}.webp`,
           folderGroup: "member",
-          file: formValues.picture,
+          file: imageFile,
         });
-        createMemberMutation.mutate({
-          member: {
-            ...formValues,
-            picture: !image ? "/images/default.png" : image,
-          },
-          eventId,
-        });
+
+        if (uploadedUrl) {
+          finalImagePath = uploadedUrl;
+        }
       }
+
+      // 2. Execute the mutation with the final string path
+      createMemberMutation.mutate({
+        member: {
+          ...formValues,
+          picture: finalImagePath, // Pass the URL string, not the File object
+        },
+        eventId,
+      });
+
       resetPicker();
     } catch (error) {
-      console.log(error);
+      console.error("Upload/Creation failed:", error);
     }
   };
   const isLoading = createMemberMutation.isPending;
