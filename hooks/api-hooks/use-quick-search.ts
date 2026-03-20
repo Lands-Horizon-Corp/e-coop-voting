@@ -1,15 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import { TMemberAttendeesWithRegistrationAssistance } from "@/types/member-attendees.types";
 
-export interface SearchResult {
-  id: string;
-  firstName: string;
-  lastName: string;
-  passbookNumber: string;
-  email?: string;
-  picture?: string;
-  [key: string]: any;
-}
-
+export type SearchResult = TMemberAttendeesWithRegistrationAssistance;
 export interface SearchResponse {
   data: SearchResult[];
   meta: {
@@ -33,24 +26,39 @@ export function useMemberSearch({
   limit = 20,
   enabled = true,
 }: UseSearchOptions) {
-  return useQuery({
-    queryKey: ["member-search", eventId, query, limit],
-    queryFn: async ({ signal }) => {
-      if (!query.trim())
-        return { data: [], meta: { total: 0, limit, count: 0, query: "" } };
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 400);
 
-      const params = new URLSearchParams({ q: query, limit: String(limit) });
+    return () => clearTimeout(handler);
+  }, [query]);
+  const searchTrigger = debouncedQuery.trim();
+  const isSearchReady = enabled && searchTrigger.length >= 3;
+
+  return useQuery({
+    queryKey: ["member-search", eventId, debouncedQuery, limit],
+    queryFn: async ({ signal }): Promise<SearchResponse> => {
+      if (!searchTrigger) {
+        return {
+          data: [],
+          meta: { total: 0, limit, count: 0, query: "" },
+        };
+      }
+      const params = new URLSearchParams({
+        q: searchTrigger,
+        limit: String(limit),
+      });
       const response = await fetch(
         `/api/v1/admin/event/${eventId}/search?${params.toString()}`,
-        {
-          signal,
-        },
+        { signal },
       );
-
       if (!response.ok) throw new Error("Search failed");
       return (await response.json()) as SearchResponse;
     },
-    enabled: enabled && query.trim().length > 0,
-    staleTime: 1000 * 60,
+    enabled: isSearchReady,
+    staleTime: 1000 * 60 * 5,
+    placeholderData: keepPreviousData,
   });
 }

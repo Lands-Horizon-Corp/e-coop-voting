@@ -95,7 +95,7 @@ const ViewMemberQr = ({ member }: { member: TMember }) => {
   );
 };
 
-const Actions = ({
+export const Actions = ({
   member,
   event,
 }: {
