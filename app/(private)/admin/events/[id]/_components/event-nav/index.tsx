@@ -13,7 +13,7 @@ export const EventRoutes: TNavListRoute[] = [
   },
   {
     icon: <Users className="size-5" />,
-    name: "Members Quick",
+    name: "Quick Search",
     path: "member-quick-search",
   },
   {
