@@ -23,8 +23,25 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
       limit: req.nextUrl.searchParams.get("limit") || "10",
     });
 
-    const queryPattern = `%${q.trim()}%`;
     const staffId = currentUser.role === "staff" ? currentUser.id : null;
+
+    // 1. Clean and Parse the Query into tokens
+    // Splits the search query by spaces or commas and removes empty strings
+    const searchTokens = q.split(/[\s,]+/).filter(Boolean);
+
+    // 2. Build dynamic search conditions
+    // Ensures EVERY word/token typed must exist in the passbook, first name, or last name.
+    // COALESCE prevents NULL values from breaking the string concatenation.
+    const searchConditions = searchTokens.map(
+      (token) =>
+        Prisma.sql`(COALESCE(ea."firstName", '') || ' ' || COALESCE(ea."lastName", '') || ' ' || COALESCE(ea."passbookNumber", '')) ILIKE ${`%${token}%`}`,
+    );
+
+    // Join the conditions with AND so a search for "Ella, Mary" requires both "Ella" and "Mary" to match
+    const combinedSearchQuery =
+      searchConditions.length > 0
+        ? Prisma.join(searchConditions, " AND ")
+        : Prisma.sql`1=1`;
 
     // OPTIMIZATION: Use a Single Raw Query for both Data and Total Count
     // This avoids hitting the DB twice for the same expensive filter
@@ -35,10 +52,7 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
         WHERE ea."eventId" = ${eventId}
           AND ea."registered" = true
           ${staffId ? Prisma.sql`AND ea."registrationAssistId" = ${staffId}` : Prisma.empty}
-          AND (
-            ea."passbookNumber" ILIKE ${queryPattern}
-            OR (ea."firstName" || ' ' || ea."lastName") ILIKE ${queryPattern}
-          )
+          AND (${combinedSearchQuery})
         LIMIT ${limit}
       )
       SELECT 
@@ -52,6 +66,7 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
       LEFT JOIN "Election" el ON ea."eventId" = el."eventId"
       ORDER BY ea."createdAt" DESC
     `;
+
     const formattedData = results.map((r) => ({
       ...r,
       registeredBy: {
