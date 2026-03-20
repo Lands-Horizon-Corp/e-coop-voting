@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { routeErrorHandler } from "@/errors/route-error-handler";
 import {
-    eventElectionParamsSchema,
-    voterVerificationSchema,
+  eventElectionParamsSchema,
+  voterVerificationSchema,
 } from "@/validation-schema/event-registration-voting";
 import { TVoteAuthorizationPayload } from "@/types";
 import { isSameDayIgnoreTimezone } from "@/lib/utils";
@@ -13,139 +13,126 @@ import { isSameDayIgnoreTimezone } from "@/lib/utils";
 type TParams = { params: { id: number; passbookNumber: number } };
 
 export const POST = async (req: NextRequest, { params }: TParams) => {
-    try {
-        const { id: eventId, electionId } =
-            eventElectionParamsSchema.parse(params);
-        const { otp, birthday, passbookNumber } = voterVerificationSchema.parse(
-            await req.json()
-        );
+  try {
+    const { id: eventId, electionId } = eventElectionParamsSchema.parse(params);
+    const { otp, birthday, passbookNumber } = voterVerificationSchema.parse(
+      await req.json(),
+    );
 
-        const election = await db.election.findUnique({
-            where: { eventId, id: electionId },
-        });
+    const election = await db.election.findUnique({
+      where: { eventId, id: electionId },
+    });
 
-        if (election?.status !== "live")
-            return NextResponse.json(
-                { message: "Voting is not yet open" },
-                { status: 403 }
-            );
+    if (!election || election.status !== "live")
+      return NextResponse.json(
+        { message: "Voting is not yet open" },
+        { status: 403 },
+      );
 
-        const voter = await db.eventAttendees.findUnique({
-            where: {
-                eventId_passbookNumber: {
-                    eventId,
-                    passbookNumber,
-                },
-            },
-        });
+    const voter = await db.eventAttendees.findUnique({
+      where: { eventId_passbookNumber: { eventId, passbookNumber } },
+    });
 
-        if (!voter)
-            return NextResponse.json(
-                { message: "You are not on the list for verification." },
-                { status: 404 }
-            );
+    if (!voter)
+      return NextResponse.json(
+        { message: "Voter not found." },
+        { status: 404 },
+      );
 
-        if (voter.voted)
-            return NextResponse.json(
-                { message: "You already voted" },
-                { status: 403 }
-            );
+    if (voter.voted)
+      return NextResponse.json(
+        { message: "You already voted" },
+        { status: 403 },
+      );
 
-        if (!otp && !birthday)
-            return NextResponse.json(
-                { message: `Invalid verification, please provide OTP ${election.allowBirthdayVerification ? 'or Birthday' : ''}` },
-                { status: 403 }
-            );
+    // --- NEW FLEXIBLE VERIFICATION LOGIC ---
 
-        if (otp === undefined) {
-            if (voter.birthday === null) {
-                return NextResponse.json(
-                    {
-                        message:
-                            "You don't have a birthday defined in our record, use OTP instead, or contact admin/staff.",
-                    },
-                    { status: 400 }
-                );
-            }
+    const otpEnabled = !!election.allowOTPVerification;
+    const bdayEnabled = !!election.allowBirthdayVerification;
 
-            const isBirthdayValid =
-                birthday && isSameDayIgnoreTimezone(voter.birthday, birthday);
-
-
-
-            console.log("Comparing birthdays...");
-            console.log("Voter birthday (from DB):", voter.birthday);
-            console.log("Input birthday:", birthday);
-            console.log("Is birthday valid:", isBirthdayValid);
-
-            if (!isBirthdayValid) {
-                return NextResponse.json(
-                    { message: "Invalid verification. incorrect Birthday" },
-                    { status: 400 }
-                );
-            }
-        } else {
-            const isOtpValid = otp && otp.length === 6 && otp === voter.voteOtp;
-            if (!isOtpValid) {
-                return NextResponse.json(
-                    { message: "Invalid verification. incorrect OTP" },
-                    { status: 400 }
-                );
-            }
+    // If at least one verification method is required by settings
+    if (otpEnabled || bdayEnabled) {
+      // Check OTP if provided and enabled
+      if (otp && otpEnabled) {
+        if (otp !== voter.voteOtp) {
+          return NextResponse.json({ message: "Invalid OTP" }, { status: 400 });
         }
+      }
+      // Check Birthday if provided and enabled
+      else if (birthday && bdayEnabled) {
+        if (
+          !voter.birthday ||
+          !isSameDayIgnoreTimezone(voter.birthday, birthday)
+        ) {
+          return NextResponse.json(
+            { message: "Invalid Birthday" },
+            { status: 400 },
+          );
+        }
+      }
+      // If settings require verification but neither was provided (or provided was disabled)
+      else {
+        const methods = [];
+        if (otpEnabled) methods.push("OTP");
+        if (bdayEnabled) methods.push("Birthday");
 
-        if (election.voteEligibility === "REGISTERED" && !voter.registered)
-            return NextResponse.json(
-                { message: "Sorry, you are not registered" },
-                { status: 403 }
-            );
-
-        if (election.voteEligibility === "MARKED_CANVOTE" && !voter.canVote)
-            return NextResponse.json(
-                { message: "Sorry, you are not marked as 'can vote'" },
-                { status: 403 }
-            );
-
-        const authorizationContent: TVoteAuthorizationPayload = {
-            eventId,
-            electionId,
-            attendeeId: voter.id,
-            passbookNumber: voter.passbookNumber,
-        };
-
-        const voterAuthorization = await new SignJWT(authorizationContent)
-            .setProtectedHeader({ alg: "HS256" })
-            .setIssuedAt()
-            .setIssuer("ace-system")
-            .sign(
-                new TextEncoder().encode(
-                    process.env.VOTING_AUTHORIZATION_SECRET
-                )
-            );
-
-        const response = NextResponse.json(
-            {
-                id: voter.id,
-                firstName: voter.firstName,
-                passbookNumber: voter.passbookNumber,
-                middleName: voter.middleName,
-                lastName: voter.lastName,
-                contact: voter.contact,
-                picture: voter.picture,
-                registered: voter.registered,
-                voted: voter.voted,
-            },
-            { status: 200 }
+        return NextResponse.json(
+          {
+            message: `Verification required. Please provide: ${methods.join(" or ")}`,
+          },
+          { status: 400 },
         );
-
-        response.cookies.set("v-auth", voterAuthorization, {
-            httpOnly: true,
-            sameSite: "lax",
-            secure: true,
-        });
-
-        return response;
-    } catch (e) {
-        return routeErrorHandler(e, req);
+      }
     }
+
+    // --- If both were false, code skips straight to here (Passbook only mode) ---
+
+    // --- ELIGIBILITY CHECKS ---
+    if (election.voteEligibility === "REGISTERED" && !voter.registered)
+      return NextResponse.json(
+        { message: "Sorry, you are not registered" },
+        { status: 403 },
+      );
+
+    if (election.voteEligibility === "MARKED_CANVOTE" && !voter.canVote)
+      return NextResponse.json(
+        { message: "Sorry, you are not authorized to vote." },
+        { status: 403 },
+      );
+
+    // --- JWT GENERATION & COOKIE SETTING ---
+    const authorizationContent: TVoteAuthorizationPayload = {
+      eventId,
+      electionId,
+      attendeeId: voter.id,
+      passbookNumber: voter.passbookNumber,
+    };
+
+    const voterAuthorization = await new SignJWT(authorizationContent)
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setIssuer("ace-system")
+      .sign(new TextEncoder().encode(process.env.VOTING_AUTHORIZATION_SECRET));
+
+    const response = NextResponse.json(
+      {
+        id: voter.id,
+        firstName: voter.firstName,
+        lastName: voter.lastName,
+        passbookNumber: voter.passbookNumber,
+        voted: voter.voted,
+      },
+      { status: 200 },
+    );
+
+    response.cookies.set("v-auth", voterAuthorization, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    return response;
+  } catch (e) {
+    return routeErrorHandler(e, req);
+  }
 };

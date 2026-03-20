@@ -99,6 +99,7 @@ model Event {
   incentives                  Incentives[]
 }
 
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model EventAttendees {
   id                   String            @id @default(uuid())
   passbookNumber       String
@@ -129,6 +130,8 @@ model EventAttendees {
   votes                Votes[]
 
   @@unique([eventId, passbookNumber])
+  @@index([eventId, registered])
+  @@index([passbookNumber(ops: raw("gin_trgm_ops"))], map: "member_search_passbook_idx", type: Gin)
 }
 
 model Election {
@@ -136,6 +139,7 @@ model Election {
   electionName              String
   status                    ElectionStatus
   allowBirthdayVerification Boolean                 @default(false)
+  allowOTPVerification Boolean @default(true)
   voteEligibility           VotingEligibility       @default(MIGS)
   eventId                   Int                     @unique
   deleted                   Boolean                 @default(false)
