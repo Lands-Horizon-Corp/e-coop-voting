@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react"; // Added useEffect
 import { Settings2 } from "lucide-react";
-import { Table } from "@tanstack/react-table";
+import { Table, VisibilityState } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,13 +18,35 @@ import { cn } from "@/lib/utils";
 interface DataTableViewOptionsProps<TData> {
   className?: string;
   table: Table<TData>;
+  storageKey: string;
 }
 
 export default function DataTableViewOptions<TData>({
   table,
   className,
+  storageKey,
 }: DataTableViewOptionsProps<TData>) {
   const [open, setOpen] = useState(false);
+  const localStorageKey = `${storageKey}-visibility`;
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(localStorageKey);
+      if (saved) {
+        try {
+          const parsedVisibility = JSON.parse(saved) as VisibilityState;
+          table.setColumnVisibility(parsedVisibility);
+        } catch (error) {
+          console.error("Failed to parse table visibility from storage", error);
+        }
+      }
+    }
+  }, [table, localStorageKey]);
+
+  const saveVisibility = (updatedVisibility: VisibilityState) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(localStorageKey, JSON.stringify(updatedVisibility));
+    }
+  };
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -37,7 +59,10 @@ export default function DataTableViewOptions<TData>({
           <span className="hidden md:block">View</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="border-none shadow-2">
+      <DropdownMenuContent
+        align="end"
+        className="border-none shadow-2 w-[150px]"
+      >
         <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
@@ -54,9 +79,11 @@ export default function DataTableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => {
                   column.toggleVisibility(!!value);
-                  setOpen(true);
-                }}
-                onClick={(e) => {
+                  setTimeout(() => {
+                    const currentVisibility = table.getState().columnVisibility;
+                    saveVisibility(currentVisibility);
+                  }, 0);
+
                   setOpen(true);
                 }}
                 onSelect={(e) => {
@@ -64,7 +91,7 @@ export default function DataTableViewOptions<TData>({
                   e.stopPropagation();
                 }}
               >
-                {column.id}
+                {column.id.replace(/_/g, " ")}
               </DropdownMenuCheckboxItem>
             );
           })}
