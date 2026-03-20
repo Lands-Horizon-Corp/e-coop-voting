@@ -16,7 +16,7 @@ const searchQuerySchema = z.object({
 export const GET = async (req: NextRequest, { params }: TParams) => {
   try {
     const eventId = eventIdSchema.parse(params.id);
-    await currentUserOrThrowAuthError(); // Just verify they are logged in
+    await currentUserOrThrowAuthError();
 
     const { q, limit } = searchQuerySchema.parse({
       q: req.nextUrl.searchParams.get("q"),
