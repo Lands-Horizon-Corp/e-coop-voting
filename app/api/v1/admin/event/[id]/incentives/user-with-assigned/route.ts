@@ -38,9 +38,9 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
                 coopId,
                 branchId,
               },
-              {
-                role: Role.root,
-              },
+              //   {
+              //     role: Role.root,
+              //   },
               {
                 role: Role.coop_root,
                 coopId,
@@ -55,9 +55,9 @@ export const GET = async (req: NextRequest, { params }: TParams) => {
               {
                 role: Role.root,
               },
-              {
-                role: Role.coop_root,
-              },
+              //   {
+              //     role: Role.coop_root,
+              //   },
               {
                 role: { in: [Role.admin, Role.staff] },
                 coopId,
