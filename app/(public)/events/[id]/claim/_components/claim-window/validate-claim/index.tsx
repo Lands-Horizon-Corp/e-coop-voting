@@ -1,5 +1,5 @@
 import z from "zod";
-import { OTPInput } from "input-otp";
+import { OTPInput, REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -145,6 +145,9 @@ const ValidateClaim = ({ eventId }: Props) => {
                           {...field}
                           autoFocus
                           maxLength={6}
+                          inputMode="text"
+                          type="text"
+                          pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
                           render={({ slots }) => (
                             <div className="flex gap-2 items-center">
                               {slots.slice(0, 3).map((s, i) => (
