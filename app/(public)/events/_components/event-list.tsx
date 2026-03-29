@@ -5,6 +5,8 @@ import { motion, Variants } from "framer-motion";
 import EventCard from "./event-card";
 import LoadingSpinner from "@/components/loading-spinner";
 import { useEventList } from "@/hooks/public-api-hooks/use-events-api";
+import { OTPInput, REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import OtpSlot from "@/components/otp-input/otp-slot";
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },

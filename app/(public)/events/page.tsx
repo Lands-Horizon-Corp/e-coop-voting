@@ -7,10 +7,12 @@ import { Button } from "@/components/ui/button";
 import EventList from "./_components/event-list";
 import AceAdsDrawer from "@/components/ads/ace-ads-drawer";
 import PartyPopperSvg from "@/components/custom-svg/party-popper";
+import { OTPInput, REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 
 const EventsPage = async () => {
     return (
         <div className="flex flex-col min-h-screen lg:py-0 w-full items-center">
+
             <AceAdsDrawer>
                 <Button className="text-center bg-secondary underline underline-offset-8 text-sm gap-x-2 font-normal rounded-none w-full text-foreground py-4">
                     <img

@@ -144,6 +144,7 @@ const AuthorizeVoter = ({
                                                 <OTPInput
                                                     {...field}
                                                     maxLength={6}
+                                                    inputMode="text"
                                                     type="text"
                                                     pattern={
                                                         REGEXP_ONLY_DIGITS_AND_CHARS
