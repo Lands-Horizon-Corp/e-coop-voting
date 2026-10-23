@@ -76,6 +76,12 @@ export const DELETE = async (req: NextRequest, { params }: TParams) => {
                 { status: 400 }
             );
 
+        if (id === user.id)
+            return NextResponse.json(
+                { message: "You cannot delete your own account" },
+                { status: 403 }
+            );
+
         const updatedBranch = await db.user.delete({
             where: { id },
             // data: { deleted: true, deletedAt: new Date(), deletedBy: user.id },

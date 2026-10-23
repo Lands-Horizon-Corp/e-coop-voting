@@ -96,6 +96,7 @@ const Actions = ({ user }: { user: TUserWBranchCoop }) => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
+                    disabled={user.id === session.data.user.id}
                     onClick={() =>
                         onOpenConfirmModal({
                             title: "Delete User 🗑️",

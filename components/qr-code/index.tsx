@@ -71,7 +71,12 @@ const QrCode = ({
         )}
       >
         {/* QR Code Section */}
-        <div className="size-[250px] flex items-center justify-center mb-4">
+        <div
+          className={cn(
+            "w-full max-w-[250px] aspect-square flex items-center justify-center",
+            (title || description) && "mb-4",
+          )}
+        >
           {value.length === 0 ? (
             <div className="flex flex-col items-center gap-y-2 text-gray-700/70">
               <QrCodeIcon className="size-12" />

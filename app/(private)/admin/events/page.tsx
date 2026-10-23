@@ -9,7 +9,7 @@ const EventsPage = async ({params}: TParams) => {
    const user = await currentUserOrThrowAuthError();
 
    return (
-      <div className="flex lg:p-5 min-h-screen flex-col w-full ">
+      <div className="flex p-4 min-h-screen flex-col w-full ">
          <EventTable user={user} params={params} />
       </div>
    );

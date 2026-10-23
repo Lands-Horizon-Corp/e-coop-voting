@@ -1,0 +1,42 @@
+{
+    "permissions": {
+        "allow": [
+            "Bash(bunx nx *)",
+            "Bash(grep -E \"^\\(shared-store|domain-member|domain-accounting|domain-transactions|ecoop-admin\\)$\")",
+            "Bash(bunx tsc *)",
+            "Bash(xargs ls)",
+            "Bash(curl *)",
+            "Bash(bunx eslint *)",
+            "Bash(bunx vitest *)",
+            "Bash(bunx dpdm *)",
+            "Bash(bun run check:cycles*)",
+            "Bash(git add *)",
+            "Bash(git commit -m ' *)",
+            "Bash(bunx prettier *)",
+            "Bash(go test *)"
+        ]
+    },
+    "hooks": {
+        "PostToolUse": [
+            {
+                "matcher": "Edit|Write",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "f=$(cat | jq -r '.tool_input.file_path // empty'); if [ -n \"$f\" ] && printf '%s' \"$f\" | grep -qE '\\.(ts|tsx|js|jsx)$'; then cd /home/rojan/Lands-Horizon/ecoop-mono && bunx eslint --fix \"$f\" >/dev/null 2>&1 || true; fi"
+                    }
+                ]
+            }
+        ],
+        "Stop": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "cd /home/rojan/Lands-Horizon/ecoop-mono && bunx nx affected -t typecheck --output-style=stream 2>&1 | tail -60; exit 0"
+                    }
+                ]
+            }
+        ]
+    }
+}

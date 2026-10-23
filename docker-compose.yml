@@ -1,17 +1,18 @@
+name: e-coop-voting
+
 services:
-    db:
-        image: postgres:16.6
-        container_name: ace_postgres_db # Explicit name to keep it separate
-        restart: always
-        shm_size: 128mb
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: acedb25
-            POSTGRES_DB: ace-system
-        ports:
-            - "5433:5432" # Computer uses 5433, Container uses 5432
-        volumes:
-            - ace_pgdata:/var/lib/postgresql/data
+  db:
+    image: postgres:16.6
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: acedb25
+      POSTGRES_DB: ace-system
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
 
 volumes:
-    ace_pgdata: # Unique volume name so data doesn't mix
+  pg_data:

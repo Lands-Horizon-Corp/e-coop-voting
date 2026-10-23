@@ -21,13 +21,13 @@ const DisplayEventQRLink = ({ Event }: Props) => {
         <div className="flex lg:flex-row gap-x-4 items-center pt-6">
             <div className="flex flex-col gap-y-2 items-center">
                 <p className="text-foreground/80 text-sm">Registration QR</p>
-                <QrCode className="size-[150px] lg:size-[250px]" themeResponsive={false} value={url} />
+                <QrCode className="w-[170px] min-h-0 p-3 lg:w-[270px] lg:p-4" themeResponsive={false} value={url} />
                 {url.length > 0 && <CopyUrl displayText="Copy registration URL" url={url} />}
             </div>
             {Event.category === "election" && (
                 <div className="flex flex-col gap-y-2 items-center">
                     <p className="text-foreground/80 text-sm">Election QR</p>
-                    <QrCode className="size-[150px] lg:size-[250px]" themeResponsive={false} value={electionUrl} />
+                    <QrCode className="w-[170px] min-h-0 p-3 lg:w-[270px] lg:p-4" themeResponsive={false} value={electionUrl} />
                     {url.length > 0 && <CopyUrl displayText="Copy election URL" url={electionUrl} />}
                 </div>
             )}

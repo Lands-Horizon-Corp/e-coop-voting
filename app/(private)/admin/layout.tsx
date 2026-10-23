@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 
 import NavBar from "./_components/navbar";
 import SideBar from "./_components/sidebar";
+import AdminBreadcrumbs from "./_components/breadcrumbs";
 import SessionProviderWrapper from "@/providers/session-provider-wrapper";
 
 export const metadata: Metadata = {
@@ -22,6 +23,9 @@ const AdminLayout = async ({ children }: Props) => {
                     <SideBar />
                 </div>
                 <main className="ml-0 lg:ml-[15rem] pt-20 lg:mt-0 lg:p-5 dark:bg-background bg-[#F9F9FB] overflow-x-hidden flex-1">
+                    <div className="px-4 pt-4 lg:pt-0">
+                        <AdminBreadcrumbs />
+                    </div>
                     {children}
                 </main>
             </div>

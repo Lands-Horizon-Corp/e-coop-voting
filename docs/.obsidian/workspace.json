@@ -1,0 +1,234 @@
+{
+  "main": {
+    "id": "820ad654d8abc23c",
+    "type": "split",
+    "children": [
+      {
+        "id": "56e97b7813c6e0ea",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7eecf6af16b28d37",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ace Manual Complete.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Ace Manual Complete"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "efa6c31737dfe9d2",
+    "type": "split",
+    "children": [
+      {
+        "id": "82eda909776ad207",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "cd4f1704bd63dbfc",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "97e71aca1cda1fe4",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "2c052349551b0da5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "69e6a3e20d989b8b",
+    "type": "split",
+    "children": [
+      {
+        "id": "3019e6e918792623",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "07827ce75b64bb01",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Ace Manual Complete.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "7ecc5429925225c5",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Ace Manual Complete.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "a0898d3740048b09",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "04231bf634cb9f47",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "98c7c2fa34a402a1",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Ace Manual Complete.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "7eecf6af16b28d37",
+  "lastOpenFiles": [
+    "Pasted image 20261023165632.png",
+    "Pasted image 20261023165530.png",
+    "Pasted image 20261023165509.png",
+    "Pasted image 20261023165427.png",
+    "Pasted image 20261023165153.png",
+    "Pasted image 20261023164937.png",
+    "Pasted image 20261023164905.png",
+    "Pasted image 20261023164816.png",
+    "Pasted image 20261023164814.png",
+    "Pasted image 20261023164757.png",
+    "Pasted image 20261023164730.png",
+    "using-the-app.md",
+    "Ace Manual Complete.md",
+    "sedv8CTqU",
+    "sedQIO1CJ",
+    "page-events.md",
+    "page-admin.md",
+    "member-registration.md",
+    "managing-an-election.md",
+    "manage-event.md",
+    "index.md",
+    "election.md",
+    "page-branches.md",
+    "Dev/scripts.md",
+    "Dev/architecture.md",
+    "Dev/backing up.md",
+    "Dev/environment.md",
+    "Dev",
+    "page-users.md",
+    "page-coops.md",
+    "member-voting.md",
+    "managing-incentives.md",
+    "users.md",
+    "events.md",
+    "coops.md",
+    "admin.md",
+    "branches.md",
+    "admin/manage-event.md",
+    "admin/manage-event.md.tmp.1555178.4a71e30ee829",
+    "admin/events.md"
+  ]
+}
