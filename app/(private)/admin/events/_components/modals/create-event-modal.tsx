@@ -37,6 +37,7 @@ import useImagePick from "@/hooks/use-image-pick";
 import { branchList } from "@/hooks/api-hooks/branch-api-hooks";
 import { useCreateEvent } from "@/hooks/api-hooks/event-api-hooks";
 import { onUploadImage } from "@/hooks/api-hooks/image-upload-api-hook";
+import { toast } from "sonner";
 
 type Props = {
     state: boolean;
@@ -133,7 +134,7 @@ const CreateEventModal = ({ state, onClose, onCancel, user }: Props) => {
         >
             <DialogContent
                 className={cn(
-                    "border-none overflow-auto overflow-y-auto max-h-[700px] shadow-2 sm:rounded-2xl  max-w-[1200px] font-inter"
+                    "border-none overflow-auto overflow-y-auto max-h-[700px] shadow-2 sm:rounded-2xl  max-w-[1200px] font-inter",
                 )}
             >
                 <ModalHead
@@ -239,7 +240,25 @@ const CreateEventModal = ({ state, onClose, onCancel, user }: Props) => {
                                                         ] as Role[]
                                                     ).includes(user.role)
                                                 }
-                                                onValueChange={field.onChange}
+                                                onValueChange={(value) => {
+                                                    const foundBranch =
+                                                        branches.find(
+                                                            (brnch) =>
+                                                                brnch.id.toString() ===
+                                                                value,
+                                                        );
+
+                                                    if (!foundBranch)
+                                                        return toast.error(
+                                                            "Failed to find branch coop, please reload.",
+                                                        );
+
+                                                    eventForm.setValue(
+                                                        "coopId",
+                                                        foundBranch.coopId,
+                                                    );
+                                                    field.onChange(value);
+                                                }}
                                                 defaultValue={field.value.toString()}
                                             >
                                                 <FormControl>
@@ -272,7 +291,7 @@ const CreateEventModal = ({ state, onClose, onCancel, user }: Props) => {
                                             <FormLabel>category </FormLabel>
                                             <Select
                                                 onValueChange={(
-                                                    newValue: EventType
+                                                    newValue: EventType,
                                                 ) => {
                                                     field.onChange(newValue);
                                                     if (
@@ -284,7 +303,7 @@ const CreateEventModal = ({ state, onClose, onCancel, user }: Props) => {
                                                         setIsElection(false);
                                                         eventForm.setValue(
                                                             "electionName",
-                                                            undefined
+                                                            undefined,
                                                         );
                                                     }
                                                 }}
@@ -345,12 +364,12 @@ const CreateEventModal = ({ state, onClose, onCancel, user }: Props) => {
                                                             className="flex flex-col items-center gap-y-4"
                                                             url={imageURL}
                                                             onChange={async (
-                                                                e
+                                                                e,
                                                             ) => {
                                                                 field.onChange(
                                                                     await onSelectImage(
-                                                                        e
-                                                                    )
+                                                                        e,
+                                                                    ),
                                                                 );
                                                             }}
                                                         />
