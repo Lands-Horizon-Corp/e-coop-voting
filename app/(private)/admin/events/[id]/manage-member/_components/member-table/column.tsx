@@ -48,6 +48,7 @@ import {
   TMemberWithEventElectionId,
 } from "@/types";
 import { useConfirmModal } from "@/stores/use-confirm-modal-store";
+import VoteCopyModalContent from "./vote-copy-modal-content";
 import {
   deleteMember,
   useOtpSend,
@@ -396,6 +397,30 @@ export const Actions = ({
             Assist Vote
           </DropdownMenuItem>
         )}
+        {isAdminOrRoot &&
+          member.voted &&
+          event.category === "election" &&
+          event.election && (
+            <DropdownMenuItem
+              className="px-2 gap-x-2"
+              onClick={() =>
+                onInfoModal({
+                  title: "Vote Copy",
+                  description: `View or download ${member.firstName} ${member.lastName}'s saved vote copy.`,
+                  hideConfirm: true,
+                  component: (
+                    <VoteCopyModalContent
+                      eventId={event.id}
+                      memberId={member.id}
+                    />
+                  ),
+                })
+              }
+            >
+              <Vote strokeWidth={2} className="h-4" />
+              Show Vote Copy
+            </DropdownMenuItem>
+          )}
         <DropdownMenuItem
           className="px-2 gap-x-2"
           onClick={() =>

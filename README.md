@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Code graph
+
+The generated Graphify graph, report, and visualization are kept in `graphify-out/` and can be queried with `graphify query "<question>"`. To refresh the graph automatically after commits and other Git history changes, install Graphify's local hooks once per clone:
+
+```bash
+graphify hook install
+```
+
+The hooks run after Git operations, not as a pre-commit gate, and are local to each clone. Graph changes produced after a commit remain in the worktree to include in a later commit. Run `graphify update .` to rebuild the graph manually.
+
 ## Getting Started
 
 First, run the development server:

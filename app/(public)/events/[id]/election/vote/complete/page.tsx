@@ -1,19 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { toast } from "sonner";
-import * as htmlToImage from "html-to-image";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
 
 import { CheckIcon } from "lucide-react";
-import { IoIosSave } from "react-icons/io";
 
 import { Button } from "@/components/ui/button";
 import UserAvatar from "@/components/user-avatar";
-import { Separator } from "@/components/ui/separator";
 import InvalidPrompt from "@/components/invalid-prompt";
 import LoadingSpinner from "@/components/loading-spinner";
+import VoteCopyReceipt from "@/components/vote-copy-receipt";
 
 import { TVoteCopyB64 } from "@/types";
 import { useElection } from "@/hooks/public-api-hooks/use-election-api";
@@ -22,20 +18,7 @@ type Props = {
   params: { id: number };
 };
 
-const formatDateTime = (date: Date) => {
-  return new Intl.DateTimeFormat("en-PH", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date(date));
-};
-
 const CompletePage = ({ params }: Props) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [saving, setSaving] = useState(false);
-
   const searchParams = useSearchParams();
   const { data: election, isLoading } = useElection({
     eventId: params.id,
@@ -54,32 +37,6 @@ const CompletePage = ({ params }: Props) => {
 
     return JSON.parse(atob(encodedVotes));
   };
-
-  const downloadVoteSummary = (downloadName: string) => {
-    if (!containerRef.current) return;
-
-    setSaving(true);
-
-    htmlToImage
-      .toJpeg(containerRef.current, { quality: 0.95 })
-      .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.download = `${downloadName}.jpeg`;
-        link.href = dataUrl;
-        link.click();
-        toast.success("Vote summary downloaded");
-      })
-      .catch((error) => {
-        console.error("Can't download", error);
-        toast.error("Could not download summary");
-      })
-      .finally(() => setSaving(false));
-  };
-
-  useEffect(() => {
-    if (!searchParams) return;
-    getVotes();
-  }, [searchParams]);
 
   if (isLoading) {
     return (
@@ -132,110 +89,14 @@ const CompletePage = ({ params }: Props) => {
         )}
 
         {/* DOWNLOADABLE SUMMARY */}
-        <div
-          ref={containerRef}
-          className="p-4 w-full flex gap-y-8 flex-col bg-background items-center"
-        >
-          {/* Event Details */}
-          <div className="w-full border rounded-lg p-4 text-center space-y-1">
-            <p className="text-lg font-semibold">{election.event.title}</p>
-            <p className="text-sm text-foreground/70">
-              {formatDateTime(election.event.date)}
-            </p>
-            <p className="text-sm text-foreground/70">
-              {election.event.location}
-            </p>
-          </div>
-
-          {getVotes().length > 0 && pb && fullName && (
-            <>
-              <Separator />
-              <div className="flex w-full gap-y-6 flex-col items-center">
-                <p className="text-xl pb-4">Your Vote Summary</p>
-
-                <div className="w-full text-sm text-foreground/70 flex flex-col">
-                  <div className="flex justify-between">
-                    <p>
-                      Voter: <span className="text-foreground">{fullName}</span>
-                    </p>
-                    <p>
-                      Event ID:{" "}
-                      <span className="text-foreground">
-                        {election.eventId}
-                      </span>
-                    </p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p>
-                      Passbook No: <span className="text-foreground">{pb}</span>
-                    </p>
-                    <p>
-                      Election ID:{" "}
-                      <span className="text-foreground">{election.id}</span>
-                    </p>
-                  </div>
-                </div>
-
-                {getVotes().map(({ positionName, votedCandidates }) => (
-                  <div
-                    key={positionName}
-                    className="w-full flex flex-col gap-y-4 px-6 py-4 rounded-xl bg-secondary/50 border dark:bg-secondary/25"
-                  >
-                    <div className="flex justify-between">
-                      <p className="font-medium">{positionName}</p>
-                      <p className="text-sm text-foreground/50">
-                        {votedCandidates.length} vote
-                        {votedCandidates.length > 1 ? "'s" : ""}
-                      </p>
-                    </div>
-
-                    <div className="w-full flex flex-col gap-y-2">
-                      {votedCandidates.length === 0 && (
-                        <p className="text-xs text-center text-foreground/40">
-                          no voted candidate
-                        </p>
-                      )}
-
-                      {votedCandidates.map(({ id, firstName, lastName }) => (
-                        <p
-                          key={id}
-                          className="text-base text-center text-foreground/60"
-                        >
-                          {firstName} {lastName}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* Download Button */}
         {getVotes().length > 0 && fullName && pb && (
-          <div className="flex flex-col items-center gap-y-3">
-            <Button
-              onClick={() =>
-                downloadVoteSummary(`${fullName}-${pb}-vote-summary`)
-              }
-              variant="secondary"
-              className="gap-x-2"
-            >
-              {saving ? (
-                <LoadingSpinner />
-              ) : (
-                <>
-                  <IoIosSave className="size-4" />
-                  <span>Download Summary Copy</span>
-                </>
-              )}
-            </Button>
-            <p className="text-xs text-center text-foreground/50">
-              If download doesn&apos;t work, please take a photo/screenshot of
-              the summary instead as your own copy.
-            </p>
-          </div>
+          <VoteCopyReceipt
+            event={election.event}
+            electionId={election.id}
+            fullName={fullName}
+            passbookNumber={pb}
+            votes={getVotes()}
+          />
         )}
 
         <p className="text-foreground/80 text-center">
