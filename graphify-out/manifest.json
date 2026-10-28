@@ -630,9 +630,9 @@
     "semantic_hash": ""
   },
   "app/(private)/admin/events/[id]/manage-member/_components/member-table/column.tsx": {
-    "mtime": 1792726079.584184,
-    "seen": 1793163769.8823636,
-    "ast_hash": "a312e7b456cd8400fcb73da8d68c3f1d",
+    "mtime": 1793164598.605977,
+    "seen": 1793178232.3552291,
+    "ast_hash": "e1fdb495c13ea21fb30158839a4d04c2",
     "semantic_hash": ""
   },
   "app/(private)/admin/events/[id]/manage-member/_components/member-table/downloadable-mail-response.tsx": {
@@ -978,9 +978,9 @@
     "semantic_hash": ""
   },
   "app/(public)/events/[id]/election/vote/complete/page.tsx": {
-    "mtime": 1792726079.5872307,
-    "seen": 1793163769.8824477,
-    "ast_hash": "d1ba3c9bb94bbb4afc22d88228e07c67",
+    "mtime": 1793164593.2434025,
+    "seen": 1793178232.3554592,
+    "ast_hash": "4c4bcd6fc99153580bc64a28beb772a5",
     "semantic_hash": ""
   },
   "app/(public)/events/[id]/election/vote/page.tsx": {
@@ -2382,9 +2382,9 @@
     "semantic_hash": ""
   },
   "types/candidate.types.ts": {
-    "mtime": 1792726079.613706,
-    "seen": 1793163769.8828127,
-    "ast_hash": "ae34a344c4ed0d04fec95eff479b05b2",
+    "mtime": 1793164652.8068385,
+    "seen": 1793178232.3563528,
+    "ast_hash": "34a70c7e1b4d249baa76f52f1bed1bfe",
     "semantic_hash": ""
   },
   "types/coop.types.ts": {
@@ -3180,9 +3180,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1792726079.5700808,
-    "seen": 1793163769.8830087,
-    "ast_hash": "1687e9644651956395451500ea629e95",
+    "mtime": 1793163951.2925062,
+    "seen": 1793178232.3567877,
+    "ast_hash": "7c376f0ccd02974f9658e777d7dc1841",
     "semantic_hash": ""
   },
   "docker-compose.yml": {
@@ -4011,6 +4011,162 @@
     "mtime": 1792726079.613082,
     "seen": 1793163769.8832173,
     "ast_hash": "e43e76d7d97456ff8a8ecac5f30a5d28",
+    "semantic_hash": ""
+  },
+  "app/(private)/admin/events/[id]/manage-member/_components/member-table/vote-copy-modal-content.tsx": {
+    "mtime": 1793164682.6035569,
+    "seen": 1793178232.355246,
+    "ast_hash": "487687f9f3001c01c5738c9c5ea5d507",
+    "semantic_hash": ""
+  },
+  "app/api/v1/admin/event/[id]/member/[memberId]/vote-copy/route.ts": {
+    "mtime": 1793164652.8578398,
+    "seen": 1793178232.3556445,
+    "ast_hash": "3bc70137098c030dcbc6b6e6215b0009",
+    "semantic_hash": ""
+  },
+  "components/vote-copy-receipt.tsx": {
+    "mtime": 1793164550.575374,
+    "seen": 1793178232.3560472,
+    "ast_hash": "08b2c09fcb6fd6a7eb79a431c06f2694",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240226101820_voter_migrate/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.3561816,
+    "ast_hash": "588f4f66750573ba6989a83f32d3ed27",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240227025658_email_address_migration/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.3561842,
+    "ast_hash": "6247bd49982a78f3993203417ffbc8a5",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240305115523_incentive_migration/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.3561866,
+    "ast_hash": "fbcff01738fe72c085850473ecf64c31",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240306131451_v0_0_1/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.3561888,
+    "ast_hash": "81af33c16fbafe77b0a49c7a79e1897d",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240307234552_v0_0_2/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.3561914,
+    "ast_hash": "c055d2ff89f6702490f9c7bac8374301",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240308102556_0_0_3_claims_approval/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.3561943,
+    "ast_hash": "e6b85a444b5ee07b1b0f7b7aa0353ef3",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240308131151_0_0_4_claim_release/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.3561974,
+    "ast_hash": "d70c26ecbca07a17173ea5ac6897ca33",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240311055403_v0_0_5_claim_release_v2/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.3562002,
+    "ast_hash": "23abdfe1cae68270ed0fea996d27f677",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240311082427_vote_settings/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.356203,
+    "ast_hash": "999ac8fdbb842a339d0294c7292d730d",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240311110650_v0_0_6_member_search_config/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.3562062,
+    "ast_hash": "a4131a8739618842de54eec5bd26e4cf",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240312044257_v0_0_7_vote_configuration_and_device_orientation/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.3562086,
+    "ast_hash": "cdf3973ef1e36506c72e58c94467cc26",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240322145404_experimental_optional_coop_id_branch_id/migration.sql": {
+    "mtime": 1792726079.5969558,
+    "seen": 1793178232.3562324,
+    "ast_hash": "8fd33367866ad59a60493eebe590834e",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20240322154956_experimental_required_not_null_coop_id_branch_id/migration.sql": {
+    "mtime": 1792726079.5970817,
+    "seen": 1793178232.3562357,
+    "ast_hash": "12aa57c5b290ddd5d0f74bebcf324457",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20250212061754_election_vote_copy_email/migration.sql": {
+    "mtime": 1792726079.5970817,
+    "seen": 1793178232.3562381,
+    "ast_hash": "17f50c61c025f4be38c96ed8ae6cb914",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20250213160324_event_settings_update/migration.sql": {
+    "mtime": 1792726079.5970817,
+    "seen": 1793178232.3562407,
+    "ast_hash": "d4281f546f287a02f3c1312389f37a55",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20250213180024_add_require_birthday_verification/migration.sql": {
+    "mtime": 1792726079.5970817,
+    "seen": 1793178232.3562436,
+    "ast_hash": "99f5a7a224239ec1b5d16d240b787d41",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20250303082228_new_event_registration_open_status/migration.sql": {
+    "mtime": 1792726079.5970817,
+    "seen": 1793178232.3562465,
+    "ast_hash": "ebe5de6a3fa6eb140cd9a3a5e0d7b24f",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20250304053950_addition_of_member_registered_date/migration.sql": {
+    "mtime": 1792726079.5970817,
+    "seen": 1793178232.356249,
+    "ast_hash": "b4718ecbcdccdc4d57275e3a5f30da5c",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20250319044837_add_otp_sent_email_indicator/migration.sql": {
+    "mtime": 1792726079.5970817,
+    "seen": 1793178232.3562531,
+    "ast_hash": "a484894abf6bb0fe2a601342690031e9",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20250323044652_surveyed/migration.sql": {
+    "mtime": 1792726079.5970817,
+    "seen": 1793178232.356256,
+    "ast_hash": "a9fac7f0bbdd1c08e88c21400223beed",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20250405195505_add_event_sub_updated_at_field_for_poller_realtime_update_workaround/migration.sql": {
+    "mtime": 1792726079.5970817,
+    "seen": 1793178232.3562589,
+    "ast_hash": "ea60bc0e47b641bff09e5c9d314c7051",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20260320111238_add_otp_verification/migration.sql": {
+    "mtime": 1792726079.5970817,
+    "seen": 1793178232.3562622,
+    "ast_hash": "fbe8af10d3b68d8958f2648a6ae5d659",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20260320_add_trigram_indexes/migration.sql": {
+    "mtime": 1792726079.5970817,
+    "seen": 1793178232.3562646,
+    "ast_hash": "9d52bcfb8acbf918e4c94fc30de6bb0e",
     "semantic_hash": ""
   }
 }

@@ -1,42 +1,42 @@
 # Graph Report - e-coop-voting  (2026-10-28)
 
 ## Corpus Check
-- 569 files · ~1,007,071 words
+- 572 files · ~1,007,713 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 11 file(s) not represented in the graph (top: .log 4, .example 1, (none) 1)
+- Unclassified: 12 file(s) not represented in the graph (top: .log 4, (none) 2, .example 1)
 
 ## Summary
-- 3585 nodes · 9285 edges · 244 communities (221 shown, 23 thin omitted)
+- 3599 nodes · 9324 edges · 244 communities (221 shown, 23 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 27 edges (avg confidence: 0.94)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `608aa4a8`
+- Built from commit: `9adb191b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- routeErrorHandler
-- Button
+- next
+- lucide-react
 - dependencies
 - currentUserOrThrowAuthError
 - server-utils.ts
-- Input
+- routeErrorHandler
 - package.json
 - event-table/column.tsx
-- create-event-modal.tsx
+- Input
 - Go Observability with OpenTelemetry
 - broadcast-otp/route.ts
 - cn
-- commons.ts
+- assist-authorize-voter/route.ts
 - DialogContent
 - api-params.ts
 - @prisma/client
 - utils.ts
-- next-auth
 - react
+- member-table/index.tsx
 - incentive-claims.types.ts
-- Separator
+- Button
 - assist-claim-sheet/index.tsx
 - Cancellation, Timeouts & Deadlines
 - InvalidPrompt
@@ -48,8 +48,8 @@
 - election-reports.tsx
 - assign-modal.tsx
 - handleAxiosErrorMessage
-- election.tsx
-- route-error-handler.ts
+- next-auth
+- broadcast-otp/route.ts
 - LoadingSpinner
 - member-table/column.tsx
 - vote-window.tsx
@@ -59,10 +59,10 @@
 - Cryptography Security Rules
 - ace-ads-drawer.tsx
 - I/O & Networking Optimization
-- zod
-- use-vote-api.ts
+- coop/[id]/route.ts
+- use-events.ts
 - claim-home.tsx
-- types/index.ts
+- @prisma/client
 - position-api-hooks.ts
 - member-api-hook.ts
 - compilerOptions
@@ -96,7 +96,6 @@
 - Slice and Map Safety Deep Dive
 - Go Safety: Correctness & Defensive Coding
 - update-event-form.tsx
-- shadcn/SKILL.md
 - Customization & Theming
 - Manage Event
 - Election
@@ -108,7 +107,7 @@
 - Generics and Type Parameters
 - OTel Collector Configuration Examples
 - OpenTelemetry with Grafana
-- candidate-card.tsx
+- attendance-api-hooks.ts
 - Sync Primitives Deep Dive
 - Go Concurrency Best Practices
 - Clean Architecture in Go
@@ -125,8 +124,8 @@
 - Security Review Checklist
 - Threat Modeling Guide
 - Language-Specific OTel SDK Instrumentation
-- admin/events/[id]/layout.tsx
-- attendees-table/index.tsx
+- attendance-quorum.tsx
+- loading-spinner.tsx
 - Tools
 - Component Composition
 - Styling & Customization
@@ -140,7 +139,7 @@
 - Pipeline Patterns
 - Filesystem Security Rules
 - Network/Web Security Rules
-- Badge
+- settings-form.tsx
 - event-home.tsx
 - main.py
 - Managing an Election
@@ -157,9 +156,9 @@
 - Cookie Security Rules
 - Memory Safety Security Rules
 - Third-Party Data Leak Rules
-- election-sidebar.tsx
+- types/index.ts
 - incentive-navigation.tsx
-- (public)/events/page.tsx
+- Critical Rules
 - Users
 - Users
 - Design Engineering
@@ -176,7 +175,7 @@
 - Component Building Principles
 - .NET (Grafana Distribution)
 - Go
-- branch/route.ts
+- branch/[id]/route.ts
 - Component Building Principles
 - Forms & Inputs
 - Coops
@@ -186,12 +185,12 @@
 - Resource Management Patterns
 - Profiling and Continuous Profiling
 - Allocation Patterns
-- auth/page.tsx
+- (public)/_components/navbar/index.tsx
 - bulk-export-pb-qr-modal.tsx
 - Branches
 - Managing an Election
 - Branches
-- use-qr-scanner.ts
+- switch/route.ts
 - The Animation Decision Framework
 - clip-path for Animation
 - Performance Rules
@@ -228,7 +227,7 @@
 - Messaging Backends
 - Notification Backends
 - PHP
-- events/layout.tsx
+- Icons
 - Commit message
 - Core Philosophy
 - Debugging Animations
@@ -257,27 +256,27 @@
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 228 edges
-2. `react` - 199 edges
-3. `Button` - 198 edges
-4. `routeErrorHandler()` - 156 edges
-5. `next` - 114 edges
-6. `handleAxiosErrorMessage()` - 107 edges
-7. `lucide-react` - 106 edges
-8. `currentUserOrThrowAuthError()` - 104 edges
+2. `Button` - 200 edges
+3. `react` - 199 edges
+4. `routeErrorHandler()` - 158 edges
+5. `next` - 115 edges
+6. `handleAxiosErrorMessage()` - 109 edges
+7. `currentUserOrThrowAuthError()` - 106 edges
+8. `lucide-react` - 106 edges
 9. `LoadingSpinner()` - 74 edges
-10. `Input` - 69 edges
+10. `zod` - 69 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Composition: asChild (radix) vs render (base)` --references--> `Badge()`  [INFERRED]
-  .claude/skills/shadcn/rules/base-vs-radix.md → components/ui/badge.tsx
-- `Message surfaces use Bubble` --references--> `Badge()`  [INFERRED]
-  .claude/skills/shadcn/rules/chat.md → components/ui/badge.tsx
 - `API routes` --references--> `AuthenticationError`  [INFERRED]
   docs/Dev/architecture.md → errors/auth-error.ts
 - `Use cn() for conditional classes` --references--> `cn()`  [INFERRED]
   .claude/skills/shadcn/rules/styling.md → lib/utils.ts
 - `Styling & Tailwind → [styling.md](./rules/styling.md)` --references--> `cn()`  [INFERRED]
   .claude/skills/shadcn/SKILL.md → lib/utils.ts
+- `Composition: asChild (radix) vs render (base)` --references--> `Badge()`  [INFERRED]
+  .claude/skills/shadcn/rules/base-vs-radix.md → components/ui/badge.tsx
+- `Message surfaces use Bubble` --references--> `Badge()`  [INFERRED]
+  .claude/skills/shadcn/rules/chat.md → components/ui/badge.tsx
 
 ## Import Cycles
 - 3-file cycle: `types/incentive-claims.types.ts -> types/user.types.ts -> types/index.ts -> types/incentive-claims.types.ts`
@@ -292,13 +291,13 @@
 
 ## Communities (244 total, 23 thin omitted)
 
-### Community 0 - "routeErrorHandler"
-Cohesion: 0.04
-Nodes (72): DELETE(), GET(), PATCH(), TParams, DELETE(), GET(), PATCH(), TParams (+64 more)
+### Community 0 - "next"
+Cohesion: 0.06
+Nodes (39): GET(), TParams, GET(), TParams, dynamic, GET(), TParams, GET() (+31 more)
 
-### Community 1 - "Button"
+### Community 1 - "lucide-react"
 Cohesion: 0.09
-Nodes (61): BranchesTable(), CoopsTable(), Error(), EventTable(), TParams, AttendanceTable(), CandidateTable(), Props (+53 more)
+Nodes (48): columns, BranchesTable(), columns, CoopsTable(), columns, EventTable(), TParams, columns (+40 more)
 
 ### Community 2 - "dependencies"
 Cohesion: 0.02
@@ -306,87 +305,87 @@ Nodes (81): dependencies, archiver, @aws-sdk/client-s3, @aws-sdk/lib-storage, @a
 
 ### Community 3 - "currentUserOrThrowAuthError"
 Cohesion: 0.05
-Nodes (50): handler, DELETE(), PATCH(), TParams, GET(), POST(), GET(), TConditionSet (+42 more)
+Nodes (52): handler, GET(), POST(), TConditionSet, GET(), TConditionSet, TParams, GET() (+44 more)
 
 ### Community 4 - "server-utils.ts"
 Cohesion: 0.06
-Nodes (44): chunkMemberData(), fetchOldMembers(), FilteredMembers, filterUniqueMembers(), mapAndFilterDuplicates(), maxDuration, MemberData, parseRegistered() (+36 more)
+Nodes (43): chunkMemberData(), fetchOldMembers(), FilteredMembers, filterUniqueMembers(), mapAndFilterDuplicates(), maxDuration, MemberData, parseRegistered() (+35 more)
 
-### Community 5 - "Input"
-Cohesion: 0.12
-Nodes (44): LoginForm(), Props, CreateBranchModal(), createTBranch, Props, Props, TUpdateBranch, UpdateBranchModal() (+36 more)
+### Community 5 - "routeErrorHandler"
+Cohesion: 0.07
+Nodes (43): DELETE(), GET(), PATCH(), TParams, candidateValue, GET(), POST(), TCreateCandidateParams (+35 more)
 
 ### Community 6 - "package.json"
-Cohesion: 0.04
-Nodes (54): name, private, version, autoprefixer, @aws-sdk/client-s3, @aws-sdk/lib-storage, @aws-sdk/s3-request-presigner, bcrypt (+46 more)
+Cohesion: 0.03
+Nodes (57): name, private, version, archiver, autoprefixer, @aws-sdk/client-s3, @aws-sdk/lib-storage, @aws-sdk/s3-request-presigner (+49 more)
 
 ### Community 7 - "event-table/column.tsx"
-Cohesion: 0.16
-Nodes (32): Actions(), columns, Actions(), columns, Actions(), columns, Actions(), columns (+24 more)
+Cohesion: 0.22
+Nodes (24): Actions(), Actions(), Actions(), Actions(), Actions(), Actions(), columns, ReleaseAction() (+16 more)
 
-### Community 8 - "create-event-modal.tsx"
-Cohesion: 0.13
-Nodes (33): CreateEventModal(), EventSchemaType, Props, CreateCandidateModal(), createTCandidate, Props, Props, UpdateCandidateModal() (+25 more)
+### Community 8 - "Input"
+Cohesion: 0.14
+Nodes (55): LoginForm(), Props, CreateBranchModal(), createTBranch, Props, Props, TUpdateBranch, UpdateBranchModal() (+47 more)
 
 ### Community 9 - "Go Observability with OpenTelemetry"
 Cohesion: 0.04
 Nodes (45): Anti-Patterns to Avoid, Basic Setup, Basic Setup (Go 1.21+), Best Practices, ❌ Cardinality Explosion, Complete Instrumentation Example, Context-Aware Logging, Core Observability Principles (+37 more)
 
 ### Community 10 - "broadcast-otp/route.ts"
-Cohesion: 0.08
-Nodes (28): maxDuration, POST(), TParams, POST(), POST(), Props, chunkArray(), getEmailTemplate() (+20 more)
+Cohesion: 0.10
+Nodes (20): Props, Email, chunkArray(), getEmailTemplate(), mails(), sendMailBatched(), sleep(), TEmail (+12 more)
 
 ### Community 11 - "cn"
-Cohesion: 0.08
-Nodes (39): AdminBreadcrumbs(), formatSegment(), Props, SEGMENT_LABELS, Cell(), Html5QRScanner(), Props, Alert (+31 more)
-
-### Community 12 - "commons.ts"
 Cohesion: 0.07
-Nodes (35): POST(), TParams, GET(), TConditionSet, TParams, TParams, GET(), searchQuerySchema (+27 more)
+Nodes (41): AdminBreadcrumbs(), formatSegment(), Props, SEGMENT_LABELS, Cell(), DataTableBasicPagination(), DataTableBasicPaginationProps, Html5QRScanner() (+33 more)
+
+### Community 12 - "assist-authorize-voter/route.ts"
+Cohesion: 0.16
+Nodes (15): POST(), TParams, POST(), TParams, createClaimAuth(), POST(), TParams, GET() (+7 more)
 
 ### Community 13 - "DialogContent"
-Cohesion: 0.12
-Nodes (31): Props, UpdateBranchImageModal(), Props, UpdateEventModal(), ImportFileModal(), Props, TImportSchema, Props (+23 more)
+Cohesion: 0.10
+Nodes (40): Home(), Props, UpdateBranchImageModal(), Props, UpdateEventModal(), createTPosition, Props, Props (+32 more)
 
 ### Community 14 - "api-params.ts"
-Cohesion: 0.07
-Nodes (36): DELETE(), PATCH(), TParams, DELETE(), PATCH(), TParams, POST(), TParams (+28 more)
+Cohesion: 0.05
+Nodes (48): DELETE(), PATCH(), TParams, DELETE(), PATCH(), TParams, POST(), TParams (+40 more)
 
 ### Community 15 - "@prisma/client"
-Cohesion: 0.06
-Nodes (32): POST(), TParams, GET(), PATCH(), TParams, PATCH(), Tparams, GET() (+24 more)
+Cohesion: 0.09
+Nodes (21): POST(), TParams, GET(), POST(), TParams, GET(), PATCH(), TParams (+13 more)
 
 ### Community 16 - "utils.ts"
-Cohesion: 0.12
-Nodes (30): Branches(), Props, AdminRoutes, Branches(), Props, AttendancePage(), Props, NotAllowed() (+22 more)
+Cohesion: 0.10
+Nodes (36): Branches(), Props, Branches(), Props, AttendancePage(), Props, NotAllowed(), Props (+28 more)
 
-### Community 17 - "next-auth"
-Cohesion: 0.12
-Nodes (29): NavBar(), Props, Props, SideBar(), LogOut(), Props, Props, RouteItem() (+21 more)
+### Community 17 - "react"
+Cohesion: 0.10
+Nodes (14): AdminLayout(), metadata, Props, ClaimPage(), metadata, Props, metadata, Props (+6 more)
 
-### Community 18 - "react"
-Cohesion: 0.08
-Nodes (27): Props, NavBar(), routes, RouteItem(), TPublicNavItem, cardVariants, innerCardVariant, linkVariant (+19 more)
+### Community 18 - "member-table/index.tsx"
+Cohesion: 0.11
+Nodes (25): columns, AttendanceTable(), Props, MembersCustomGlobalFilter(), DownloadableMailResponse(), MemberTable(), Props, SearchInput (+17 more)
 
 ### Community 19 - "incentive-claims.types.ts"
-Cohesion: 0.08
-Nodes (29): MemberCard(), Props, SearchResponse, SearchResult, UseSearchOptions, TIncentiveAssigned, TIncentiveAssignedMinimalInfo, TIncentiveAssignedToMe (+21 more)
+Cohesion: 0.15
+Nodes (17): TIncentiveAssigned, TIncentiveAssignedMinimalInfo, TIncentiveAssignedToMe, TIncentiveAssignedWithUserMinimalInfo, TIncentiveClaimAuth, TIncentiveClaims, TIncentiveClaimsMinimalInfo, TIncentiveClaimsWithIncentiveAndClaimAssistance (+9 more)
 
-### Community 20 - "Separator"
-Cohesion: 0.14
-Nodes (23): Home(), Props, TClaimValidateForm, ValidateClaim(), AuthorizeVoter(), Props, Props, ErrorAlert() (+15 more)
+### Community 20 - "Button"
+Cohesion: 0.09
+Nodes (43): Error(), Props, TClaimValidateForm, ValidateClaim(), MemberInfoDisplay(), AuthorizeVoter(), Props, Props (+35 more)
 
 ### Community 21 - "assist-claim-sheet/index.tsx"
-Cohesion: 0.11
-Nodes (25): IncentiveAssigned(), Props, AssistClaimSheet(), Props, TCreateClaimEntry, ClaimWindow(), Props, EventsNav() (+17 more)
+Cohesion: 0.10
+Nodes (35): NavBar(), Props, Props, SideBar(), LogOut(), Props, RouteItem(), AdminRoutes (+27 more)
 
 ### Community 22 - "Cancellation, Timeouts & Deadlines"
 Cohesion: 0.06
 Nodes (29): Cancellation, Cancellation, Timeouts & Deadlines, Checking cancellation in loops, `context.AfterFunc` (Go 1.21+), `context.WithDeadline` — absolute point in time, `context.WithoutCancel` (Go 1.21+), `context.WithTimeout` — relative duration, Listening for Cancellation (+21 more)
 
 ### Community 23 - "InvalidPrompt"
-Cohesion: 0.12
-Nodes (24): CompletePage(), Props, MemberInfoDisplay(), ElectionHome(), Props, ValidateVoter(), ElectionVerifyPage(), metadata (+16 more)
+Cohesion: 0.15
+Nodes (20): CompletePage(), Props, ElectionHome(), Props, ElectionVerifyPage(), metadata, Props, metadata (+12 more)
 
 ### Community 24 - "Animation Recipes"
 Cohesion: 0.06
@@ -397,8 +396,8 @@ Cohesion: 0.07
 Nodes (28): 1. Hierarchy of Information, 1. Stat Panel (Single Value), 2. RED Method (Services), 2. Time Series Graph, 3. Table Panel, 3. USE Method (Resources), 4. Heatmap, Alerts in Dashboards (+20 more)
 
 ### Community 26 - "bar-graph-section.tsx"
-Cohesion: 0.17
-Nodes (23): NotFound(), BarGraphSection(), TParams, NoVoters(), PieGraphSection(), TParams, page(), TParams (+15 more)
+Cohesion: 0.12
+Nodes (31): Header(), Props, Loading(), NotFound(), BarGraphSection(), TParams, NoVoters(), PieGraphContainer() (+23 more)
 
 ### Community 27 - "Animation Standards Reference"
 Cohesion: 0.07
@@ -409,40 +408,40 @@ Cohesion: 0.07
 Nodes (26): Aggregation, Architecture, Credential leak detection, Decolorize, Drop/Keep Labels, Error rate alert query, Grafana Loki - Log Aggregation, HTTP 5xx errors with details (+18 more)
 
 ### Community 29 - "election-reports.tsx"
-Cohesion: 0.21
-Nodes (17): DataTable(), DataTableProps, ElectionReports(), TParams, Props, UserReportTable(), ActionTooltipProps, DataTableProps (+9 more)
+Cohesion: 0.20
+Nodes (19): DataTable(), DataTableProps, ElectionReports(), TParams, Props, ReportHome(), Props, UserReportTable() (+11 more)
 
 ### Community 30 - "assign-modal.tsx"
-Cohesion: 0.22
-Nodes (20): AssignModal(), Props, TCreateAssign, FilterModal(), Props, DataTableFacetedFilter(), DataTableFacetedFilterProps, FacetedOptionType (+12 more)
+Cohesion: 0.23
+Nodes (18): AssignModal(), Props, TCreateAssign, FilterModal(), Props, DataTableFacetedFilter(), DataTableFacetedFilterProps, BirthdayInputProps (+10 more)
 
 ### Community 31 - "handleAxiosErrorMessage"
-Cohesion: 0.12
-Nodes (23): useAttendanceList(), useAttendanceRegistration(), getElection(), hasElection(), promptElectionStatus(), TParams, updateAssignedQuantity(), useClaimDelete() (+15 more)
+Cohesion: 0.17
+Nodes (17): TCreateCoopType, TUpdateCoopType, useDeleteCoop(), useUpdateCoop(), updateAssignedQuantity(), useClaimDelete(), useClaimRelease(), useCreateAssignIncentive() (+9 more)
 
-### Community 32 - "election.tsx"
-Cohesion: 0.16
-Nodes (18): page(), Props, Header(), Props, Loading(), PieGraphContainer(), Props, Election() (+10 more)
+### Community 32 - "next-auth"
+Cohesion: 0.15
+Nodes (14): Props, Candidates(), ElectionDetails(), Props, Election(), Props, ElectionSwitch(), columns (+6 more)
 
-### Community 33 - "route-error-handler.ts"
-Cohesion: 0.16
-Nodes (16): POST(), TParams, GET(), TParams, DELETE(), TParams, POST(), TParams (+8 more)
+### Community 33 - "broadcast-otp/route.ts"
+Cohesion: 0.13
+Nodes (15): maxDuration, POST(), TParams, POST(), POST(), sendMail(), ResendMailer, candidateId (+7 more)
 
 ### Community 34 - "LoadingSpinner"
-Cohesion: 0.17
-Nodes (17): AttendanceQuorum(), Props, EventDetailBar(), Props, EventSettings(), Props, Loading(), Props (+9 more)
+Cohesion: 0.31
+Nodes (7): Loading(), Props, Loading(), Props, DefaultLoading(), LoadingSpinner(), Skeleton()
 
 ### Community 35 - "member-table/column.tsx"
-Cohesion: 0.16
-Nodes (17): ViewEventQr(), ElectionSwitch(), Props, Actions(), Cell, columns(), SendOtpCell(), ViewMemberQr() (+9 more)
+Cohesion: 0.12
+Nodes (25): ViewEventQr(), columns, Props, Actions(), Cell, columns(), SendOtpCell(), ViewMemberQr() (+17 more)
 
 ### Community 36 - "vote-window.tsx"
-Cohesion: 0.16
-Nodes (16): OnlyLandscape(), OnlyPortrait(), Props, VoteHome(), CandidateList(), Props, VoteHeader(), Props (+8 more)
+Cohesion: 0.11
+Nodes (24): OnlyLandscape(), OnlyPortrait(), Props, VoteHome(), CandidateCard(), cardVariants, Props, CandidateList() (+16 more)
 
 ### Community 37 - "@tanstack/react-query"
-Cohesion: 0.19
-Nodes (11): IAPICallback, IMutationHook, IQueryHook, Props, axios, query-string, @tanstack/react-query, TIncentiveClaimReportsPerUser (+3 more)
+Cohesion: 0.12
+Nodes (17): useClaimReports(), TParams, useUpdateElectionSettings(), getReportsResults(), useVoterAuthorization(), Props, axios, query-string (+9 more)
 
 ### Community 38 - "Apple Design"
 Cohesion: 0.09
@@ -457,36 +456,36 @@ Cohesion: 0.10
 Nodes (21): Algorithm Selection Guide, Common Cryptographic Mistakes, Cryptography Security Rules, CWE References, DES Encryption — High, Insecure SSH Host Key Verification — High, Insecure TLS Configuration — High, Insufficient Key Strength — Medium (+13 more)
 
 ### Community 41 - "ace-ads-drawer.tsx"
-Cohesion: 0.16
-Nodes (17): layout(), metadata, Props, Choosing between overlay components, No manual z-index on overlay components, Component Selection, AceAdsDrawer(), anim (+9 more)
+Cohesion: 0.07
+Nodes (36): dynamic, LoginPage(), Props, cardVariants, EventCard(), innerCardVariant, linkVariant, Props (+28 more)
 
 ### Community 42 - "I/O & Networking Optimization"
 Cohesion: 0.10
 Nodes (19): Avoid io.ReadAll for large payloads, Batch Operations, Buffered I/O, Cgo Overhead, Channel: batch processing from a stream, Concurrent Multi-Stage Pipelines, Connection pooling, Database: batch inserts over row-by-row (+11 more)
 
-### Community 43 - "zod"
-Cohesion: 0.17
-Nodes (15): CreateCoopModal(), Props, TCreateCoop, Props, TUpdateCoop, UpdateCoopModal(), TCreateCoopType, TUpdateCoopType (+7 more)
+### Community 43 - "coop/[id]/route.ts"
+Cohesion: 0.23
+Nodes (11): DELETE(), PATCH(), TParams, GET(), POST(), imageFileToUploadable(), uploadFile(), coopIdParamSchema (+3 more)
 
-### Community 44 - "use-vote-api.ts"
-Cohesion: 0.11
-Nodes (17): Props, MemberSearchPageProps, useVoterAuthorization(), TCreateElection, TElection, TElectionWithEventWithPositionAndCandidates, TElectionWithPositionAndCandidate, TElectionWithPositionsAndCandidates (+9 more)
+### Community 44 - "use-events.ts"
+Cohesion: 0.29
+Nodes (8): Props, IAPICallback, IMutationHook, IQueryHook, useUpdateEventSettings(), usePublicGetEventById(), TEvent, TEventWithElection
 
 ### Community 45 - "claim-home.tsx"
-Cohesion: 0.18
-Nodes (15): ClaimHome(), Props, ClaimerCard(), Props, ClaimPage(), metadata, Props, IncentiveGiftSvg() (+7 more)
+Cohesion: 0.20
+Nodes (15): ClaimHome(), Props, ClaimWindow(), Props, ClaimerCard(), Props, useClaim(), useClaimablesList() (+7 more)
 
-### Community 46 - "types/index.ts"
-Cohesion: 0.12
-Nodes (13): createBranch(), TCreateBranch, TUpdateBranch, TParams, useUpdateElectionSettings(), TBranchWCoop, TCoop, TCoopWBranch (+5 more)
+### Community 46 - "@prisma/client"
+Cohesion: 0.11
+Nodes (20): Props, createBranch(), TCreateBranch, TUpdateBranch, getElection(), hasElection(), promptElectionStatus(), TParams (+12 more)
 
 ### Community 47 - "position-api-hooks.ts"
-Cohesion: 0.11
-Nodes (17): createPosition(), deletePosition(), getUniquePosition(), Props, updatePositions(), updateProps, TCandidate, TCandidatewithPositionwithEventId (+9 more)
+Cohesion: 0.09
+Nodes (22): Props, createPosition(), deletePosition(), getUniquePosition(), Props, updatePositions(), updateProps, TCandidate (+14 more)
 
 ### Community 48 - "member-api-hook.ts"
-Cohesion: 0.13
-Nodes (16): createManyMember(), createManyMemberProps, createMember(), deleteMember(), Props, quorumtype, updateMember(), useUpdateEventAttendees() (+8 more)
+Cohesion: 0.19
+Nodes (11): createManyMemberProps, Props, quorumtype, useUpdateEventAttendees(), useVoterAuthorizationAssist(), SkippedStoreState, TCreateManyMember, TCreateMember (+3 more)
 
 ### Community 49 - "compilerOptions"
 Cohesion: 0.11
@@ -497,16 +496,16 @@ Cohesion: 0.11
 Nodes (18): Architecture, Best Practices Summary, Code Philosophy, Constructor Patterns: Functional Options vs Builder, Cross-References, Data Handling, Database Patterns, Detailed Guides (+10 more)
 
 ### Community 51 - "shadcn/ui"
-Cohesion: 0.11
-Nodes (18): Chat & Messaging → [chat.md](./rules/chat.md), CLI, Component Docs, Examples, and Usage, Component Structure → [composition.md](./rules/composition.md), Critical Rules, Current Project Context, Detailed References, Forms & Inputs → [forms.md](./rules/forms.md) (+10 more)
+Cohesion: 0.20
+Nodes (10): Component Docs, Examples, and Usage, Current Project Context, Detailed References, Key Fields, Key Patterns, Principles, Quick Reference, shadcn/ui (+2 more)
 
 ### Community 52 - "components.json"
 Cohesion: 0.11
 Nodes (17): aliases, components, hooks, lib, ui, utils, iconLibrary, rsc (+9 more)
 
 ### Community 53 - "Architecture"
-Cohesion: 0.11
-Nodes (17): Admin side, API routes, Architecture, Authentication and roles, Conventions, Data model, Email, Folder map (+9 more)
+Cohesion: 0.12
+Nodes (16): Admin side, API routes, Architecture, Authentication and roles, Conventions, Data model, Folder map, Image storage (+8 more)
 
 ### Community 54 - "CPU Optimization"
 Cohesion: 0.12
@@ -545,12 +544,12 @@ Cohesion: 0.23
 Nodes (10): NotFound(), Members(), Props, page(), Props, Members(), Props, page() (+2 more)
 
 ### Community 63 - "Card"
-Cohesion: 0.33
-Nodes (12): BarGraphContainer(), Props, QuorumSection(), TParams, ElectionDetails(), Props, Card, CardContent (+4 more)
+Cohesion: 0.18
+Nodes (17): ExistingClaims(), Props, ElectionStatus(), Props, BarGraphContainer(), Props, QuorumSection(), TParams (+9 more)
 
 ### Community 64 - "update-user-modal.tsx"
-Cohesion: 0.22
-Nodes (13): createTUser, CreateUserModal(), Props, Props, updateTUser, UpdateUserModal(), canEditRole(), getAssignableRoles() (+5 more)
+Cohesion: 0.12
+Nodes (21): Props, TCreateCoop, Props, TUpdateCoop, createTUser, Props, Props, updateTUser (+13 more)
 
 ### Community 65 - "Managing Incentives"
 Cohesion: 0.12
@@ -590,7 +589,7 @@ Nodes (15): 1. Open the Register page, 2. Find yourself, 3. Check the card, 4. E
 
 ### Community 74 - "sonner"
 Cohesion: 0.19
-Nodes (12): mutationErrorHandler(), deleteCandidate(), Props, TParams, UpdateCandidateProps, useCreateCandidate(), useUpdateCandidate(), deleteEvent() (+4 more)
+Nodes (11): mutationErrorHandler(), deleteCandidate(), Props, TParams, UpdateCandidateProps, useCreateCandidate(), useUpdateCandidate(), deleteEvent() (+3 more)
 
 ### Community 75 - "Go Documentation"
 Cohesion: 0.14
@@ -609,12 +608,8 @@ Cohesion: 0.14
 Nodes (14): Best Practices Summary, Common Mistakes, Cross-References, Enforce with Linters, Go 1.25+ reflection type assertions, Go Safety: Correctness & Defensive Coding, Immutability & Defensive Copying, Map concurrent access (+6 more)
 
 ### Community 79 - "update-event-form.tsx"
-Cohesion: 0.24
-Nodes (10): TFormData, UpdateEventForm(), Label, labelVariants, RadioGroup, RadioGroupItem, Textarea, TextareaProps (+2 more)
-
-### Community 80 - "shadcn/SKILL.md"
-Cohesion: 0.21
-Nodes (4): Icons, Icons in Button use data-icon attribute, No sizing classes on icons inside components, Pass icons as component objects, not string keys
+Cohesion: 0.16
+Nodes (15): TFormData, UpdateEventForm(), Checkbox, FormDescription, FormFieldContext, FormFieldContextValue, FormItemContext, FormItemContextValue (+7 more)
 
 ### Community 81 - "Customization & Theming"
 Cohesion: 0.14
@@ -660,9 +655,9 @@ Nodes (13): Alloy Docker Compose, Complete config.yaml, Grafana Alloy - Head-Bas
 Cohesion: 0.15
 Nodes (13): 1. Authenticate to the Grafana Cloud OTLP endpoint, 2. Auto-instrument a Java app + verify, 3. Auto-instrument a Python app, 4. Add Alloy as a buffering / sampling collector, 5. Kubernetes — auto-inject via the Operator, Backends, Common Workflows, Key environment variables (+5 more)
 
-### Community 92 - "candidate-card.tsx"
-Cohesion: 0.24
-Nodes (10): CandidateCard(), cardVariants, Props, containerVariants, Props, Props, VoteSummary(), formatDateTime() (+2 more)
+### Community 92 - "attendance-api-hooks.ts"
+Cohesion: 0.15
+Nodes (11): MemberCard(), Props, useAttendanceRegistration(), SearchResponse, SearchResult, UseSearchOptions, TMemberAttendanceStats, TMemberAttendeeMinimalInfo (+3 more)
 
 ### Community 93 - "Sync Primitives Deep Dive"
 Cohesion: 0.17
@@ -728,13 +723,13 @@ Nodes (11): Conducting a Threat Model, DREAD Risk Scoring, Example: SQL Injectio
 Cohesion: 0.17
 Nodes (9): Docker, Grafana Beyla (eBPF Auto-Instrumentation), Kubernetes (DaemonSet), Language-Specific OTel SDK Instrumentation, Manual SDK Setup (TypeScript/ESM), Manual Span Creation (Node.js), Node.js, Verify (+1 more)
 
-### Community 109 - "admin/events/[id]/layout.tsx"
-Cohesion: 0.26
-Nodes (9): EventNavItems(), Props, EventNav(), EventRoutes, Props, EventLayout(), Props, BackButton() (+1 more)
+### Community 109 - "attendance-quorum.tsx"
+Cohesion: 0.23
+Nodes (12): AttendanceQuorum(), Props, EventDetailBar(), Props, EventHeader(), EventNav(), EventLayout(), Props (+4 more)
 
-### Community 110 - "attendees-table/index.tsx"
-Cohesion: 0.26
-Nodes (8): columns, customNameFilter(), EventAttendeesTable(), Props, Props, SearchInput(), Checkbox, TMemberWithEventElectionId
+### Community 110 - "loading-spinner.tsx"
+Cohesion: 0.27
+Nodes (7): TVoteCopyData, VoteCopyModalContent(), CompletePage(), Props, Props, Props, VoteCopyReceipt()
 
 ### Community 111 - "Tools"
 Cohesion: 0.17
@@ -788,13 +783,13 @@ Nodes (11): CWE References, Decompression Bomb — Medium, Directory Traversal �
 Cohesion: 0.18
 Nodes (11): Bind to All Interfaces — Medium, CWE References, Exposed pprof Profiling Endpoints — High, Insecure HTTP Server Configuration — Medium, Network/Web Security Rules, Observable Timing (Timing Attacks) — Medium, Open Redirect Vulnerability — Medium, Permissive Regex Validation — Low (+3 more)
 
-### Community 124 - "Badge"
+### Community 124 - "settings-form.tsx"
 Cohesion: 0.29
-Nodes (8): ExistingClaims(), Props, ElectionStatus(), EventHeader(), Props, Badge(), BadgeProps, badgeVariants
+Nodes (6): Props, Switch, electionSettingSchema, electionStatus, voteConfiguration, voteEligibility
 
 ### Community 125 - "event-home.tsx"
-Cohesion: 0.25
-Nodes (8): EventHome(), imgAnimation, Props, Props, VoteButton(), ElectionPage(), metadata, Props
+Cohesion: 0.14
+Nodes (15): DisplayEventQRLink(), Props, EventHome(), imgAnimation, Props, Props, VoteButton(), ElectionPage() (+7 more)
 
 ### Community 126 - "main.py"
 Cohesion: 0.27
@@ -856,17 +851,17 @@ Nodes (9): Always Run Race Detector, CWE References, Data Races — High, Intege
 Cohesion: 0.20
 Nodes (9): Analytics/Monitoring Services — Medium, Common Vulnerable Services, CWE References, Data Filtering Layer, Error Tracking Services — Medium, Overview, Review Checklist, Table of Contents (+1 more)
 
-### Community 141 - "election-sidebar.tsx"
-Cohesion: 0.29
-Nodes (7): ElectionSideBarItems(), Props, ElectionSideBar(), Props, SideBar, EventLayout(), Props
+### Community 141 - "types/index.ts"
+Cohesion: 0.12
+Nodes (16): EventNavItems(), Props, EventRoutes, Props, ElectionSideBarItems(), Props, ElectionSideBar(), Props (+8 more)
 
 ### Community 142 - "incentive-navigation.tsx"
 Cohesion: 0.29
 Nodes (7): IncentiveNavigation(), incentiveRoutes, Props, NavItem(), TIncentiveNavProps, IncentiveLayout(), Props
 
-### Community 143 - "(public)/events/page.tsx"
-Cohesion: 0.33
-Nodes (7): EventCard(), containerVariants, EventList(), dynamic, EventsPage(), PartyPopperSvg(), useEventList()
+### Community 143 - "Critical Rules"
+Cohesion: 0.25
+Nodes (8): Chat & Messaging → [chat.md](./rules/chat.md), CLI, Component Structure → [composition.md](./rules/composition.md), Critical Rules, Forms & Inputs → [forms.md](./rules/forms.md), Icons → [icons.md](./rules/icons.md), Styling & Tailwind → [styling.md](./rules/styling.md), Use Components, Not Custom Markup → [composition.md](./rules/composition.md)
 
 ### Community 144 - "Users"
 Cohesion: 0.20
@@ -932,9 +927,9 @@ Nodes (8): ASP.NET Core (.NET 6+), Console App (.NET 6+), Install, Manual Span C
 Cohesion: 0.25
 Nodes (8): Dependencies, Go, HTTP Route Tag for Better Span Names, main.go - HTTP Server with Instrumentation, Manual Span Creation, otel.go - SDK Setup, Requirements, Run with Environment Variables
 
-### Community 160 - "branch/route.ts"
-Cohesion: 0.29
-Nodes (6): GET(), POST(), TConditionSet, branchIdSchema, createBranchSchema, updateBranchSchema
+### Community 160 - "branch/[id]/route.ts"
+Cohesion: 0.22
+Nodes (8): DELETE(), GET(), PATCH(), TParams, branchIdParamSchema, branchIdSchema, createBranchSchema, updateBranchSchema
 
 ### Community 161 - "Component Building Principles"
 Cohesion: 0.25
@@ -972,9 +967,9 @@ Nodes (6): Continuous Profiling with Pyroscope, Cost of Continuous Profiling, On
 Cohesion: 0.29
 Nodes (7): Allocation Patterns, Direct indexing vs append, Eliminate redundant map lookups, Interface boxing, Map size hints, Reuse slices via append(s[:0], ...), Sentinel errors vs fmt.Errorf
 
-### Community 170 - "auth/page.tsx"
-Cohesion: 0.43
-Nodes (5): dynamic, LoginPage(), Props, INIT_ROOT_ACCOUNT(), hasRoot()
+### Community 170 - "(public)/_components/navbar/index.tsx"
+Cohesion: 0.53
+Nodes (4): NavBar(), routes, RouteItem(), TPublicNavItem
 
 ### Community 171 - "bulk-export-pb-qr-modal.tsx"
 Cohesion: 0.48
@@ -992,9 +987,9 @@ Nodes (7): Before and during the election, Managing an Election, Step 1. Create 
 Cohesion: 0.29
 Nodes (7): Branches, Create, Delete, Row actions, Update, What it's for, What the table shows
 
-### Community 175 - "use-qr-scanner.ts"
-Cohesion: 0.29
-Nodes (5): @yudiel/react-qr-scanner, zustand, useIsElection, IQRModalStore, IQRScannerDatas
+### Community 175 - "switch/route.ts"
+Cohesion: 0.50
+Nodes (3): PATCH(), Tparams, electionSwitchSchema
 
 ### Community 176 - "The Animation Decision Framework"
 Cohesion: 0.33
@@ -1109,8 +1104,8 @@ Cohesion: 0.40
 Nodes (4): extends, rules, @next/next/no-img-element, next/core-web-vitals
 
 ### Community 205 - "use-admin-modal-store.ts"
-Cohesion: 0.40
-Nodes (4): AdminModalStore, ModalData, ModalType, userModalStore
+Cohesion: 0.25
+Nodes (6): zustand, useIsElection, AdminModalStore, ModalData, ModalType, userModalStore
 
 ### Community 206 - "Core Philosophy"
 Cohesion: 0.50
@@ -1140,6 +1135,10 @@ Nodes (4): Notification Backends, Slack — `slog-slack`, Telegram — `slog-tel
 Cohesion: 0.50
 Nodes (4): Environment Variables, Install, PHP, Setup
 
+### Community 214 - "Icons"
+Cohesion: 0.40
+Nodes (4): Icons, Icons in Button use data-icon attribute, No sizing classes on icons inside components, Pass icons as component objects, not string keys
+
 ### Community 215 - "Commit message"
 Cohesion: 0.50
 Nodes (3): Commit message, Rules, Steps
@@ -1157,8 +1156,8 @@ Cohesion: 0.50
 Nodes (4): Bulk image pipeline, Careful, Scripts, The scripts
 
 ### Community 219 - "README.md"
-Cohesion: 0.50
-Nodes (3): Deploy on Vercel, Getting Started, Learn More
+Cohesion: 0.40
+Nodes (4): Code graph, Deploy on Vercel, Getting Started, Learn More
 
 ### Community 220 - "sync.WaitGroup"
 Cohesion: 0.67
@@ -1177,24 +1176,24 @@ Cohesion: 0.67
 Nodes (3): defer in loops — resource accumulation, Goroutine leaks, Resource Safety
 
 ## Knowledge Gaps
-- **34 isolated node(s):** `next/core-web-vitals`, `VERIFICATION_TEMPLATE`, `@aws-sdk/s3-request-presigner`, `@faker-js/faker`, `@table-library/react-table-library` (+29 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1937 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **34 isolated node(s):** `next/core-web-vitals`, `VERIFICATION_TEMPLATE`, `autoprefixer`, `@aws-sdk/s3-request-presigner`, `canvas` (+29 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1944 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Architecture` connect `Architecture` to `Button`, `index.md`?**
-  _High betweenness centrality (0.060) - this node is a cross-community bridge._
+- **Why does `Architecture` connect `Architecture` to `broadcast-otp/route.ts`, `member-table/index.tsx`, `index.md`?**
+  _High betweenness centrality (0.065) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `cn()` (e.g. with `Use cn() for conditional classes` and `Styling & Tailwind → [styling.md](./rules/styling.md)`) actually correct?**
   _`cn()` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `next/core-web-vitals`, `VERIFICATION_TEMPLATE`, `@aws-sdk/s3-request-presigner` to the rest of the system?**
+- **What connects `next/core-web-vitals`, `VERIFICATION_TEMPLATE`, `autoprefixer` to the rest of the system?**
   _34 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `routeErrorHandler` be split into smaller, more focused modules?**
-  _Cohesion score 0.04092899295640586 - nodes in this community are weakly interconnected._
-- **Why does `react` connect `react` to `Button`, `Input`, `package.json`, `event-table/column.tsx`, `create-event-modal.tsx`, `cn`, `commons.ts`, `election-sidebar.tsx`, `incentive-navigation.tsx`, `DialogContent`, `utils.ts`, `next-auth`, `(public)/events/page.tsx`, `incentive-claims.types.ts`, `Separator`, `assist-claim-sheet/index.tsx`, `InvalidPrompt`, `bar-graph-section.tsx`, `election-reports.tsx`, `assign-modal.tsx`, `election.tsx`, `LoadingSpinner`, `member-table/column.tsx`, `vote-window.tsx`, `ace-ads-drawer.tsx`, `auth/page.tsx`, `bulk-export-pb-qr-modal.tsx`, `claim-home.tsx`, `types/index.ts`, `app/layout.tsx`, `_components/members.tsx`, `Card`, `update-user-modal.tsx`, `update-event-form.tsx`, `events/layout.tsx`, `candidate-card.tsx`, `admin/events/[id]/layout.tsx`, `attendees-table/index.tsx`, `Badge`, `event-home.tsx`?**
-  _High betweenness centrality (0.055) - this node is a cross-community bridge._
-- **Should `Button` be split into smaller, more focused modules?**
-  _Cohesion score 0.08879551820728292 - nodes in this community are weakly interconnected._
-- **Why does `cn()` connect `cn` to `Button`, `Input`, `event-table/column.tsx`, `create-event-modal.tsx`, `DialogContent`, `incentive-navigation.tsx`, `(public)/events/page.tsx`, `utils.ts`, `next-auth`, `react`, `Separator`, `assist-claim-sheet/index.tsx`, `InvalidPrompt`, `bar-graph-section.tsx`, `election-reports.tsx`, `assign-modal.tsx`, `election.tsx`, `LoadingSpinner`, `member-table/column.tsx`, `vote-window.tsx`, `ace-ads-drawer.tsx`, `claim-home.tsx`, `shadcn/ui`, `Card`, `update-event-form.tsx`, `candidate-card.tsx`, `attendees-table/index.tsx`, `Styling & Customization`, `Badge`, `event-home.tsx`?**
-  _High betweenness centrality (0.043) - this node is a cross-community bridge._
+- **Should `next` be split into smaller, more focused modules?**
+  _Cohesion score 0.06013986013986014 - nodes in this community are weakly interconnected._
+- **Why does `react` connect `react` to `lucide-react`, `package.json`, `event-table/column.tsx`, `Input`, `broadcast-otp/route.ts`, `cn`, `types/index.ts`, `DialogContent`, `incentive-navigation.tsx`, `utils.ts`, `member-table/index.tsx`, `Button`, `assist-claim-sheet/index.tsx`, `InvalidPrompt`, `bar-graph-section.tsx`, `election-reports.tsx`, `assign-modal.tsx`, `next-auth`, `member-table/column.tsx`, `vote-window.tsx`, `ace-ads-drawer.tsx`, `(public)/_components/navbar/index.tsx`, `bulk-export-pb-qr-modal.tsx`, `claim-home.tsx`, `@prisma/client`, `app/layout.tsx`, `_components/members.tsx`, `Card`, `update-user-modal.tsx`, `update-event-form.tsx`, `attendance-api-hooks.ts`, `attendance-quorum.tsx`, `loading-spinner.tsx`, `settings-form.tsx`, `event-home.tsx`?**
+  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **Should `lucide-react` be split into smaller, more focused modules?**
+  _Cohesion score 0.09375 - nodes in this community are weakly interconnected._
+- **Why does `cn()` connect `cn` to `lucide-react`, `event-table/column.tsx`, `Input`, `DialogContent`, `incentive-navigation.tsx`, `Critical Rules`, `utils.ts`, `react`, `member-table/index.tsx`, `Button`, `assist-claim-sheet/index.tsx`, `InvalidPrompt`, `bar-graph-section.tsx`, `election-reports.tsx`, `assign-modal.tsx`, `next-auth`, `LoadingSpinner`, `member-table/column.tsx`, `vote-window.tsx`, `ace-ads-drawer.tsx`, `claim-home.tsx`, `@prisma/client`, `position-api-hooks.ts`, `Card`, `update-user-modal.tsx`, `update-event-form.tsx`, `attendance-quorum.tsx`, `loading-spinner.tsx`, `Styling & Customization`, `settings-form.tsx`, `event-home.tsx`?**
+  _High betweenness centrality (0.047) - this node is a cross-community bridge._
